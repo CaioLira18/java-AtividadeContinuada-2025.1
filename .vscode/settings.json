@@ -1,0 +1,12 @@
+{
+    "java.project.sourcePaths": ["src"],
+    "java.project.outputPath": "bin",
+    "java.project.referencedLibraries": [
+        "lib/junit-jupiter-api-5.10.0.jar",
+        "lib/junit-jupiter-engine-5.10.0.jar",
+        "lib/junit-platform-console-standalone-1.10.0.jar",
+        "lib/lombok.jar"
+
+        // Adicione outros JARs necessários aqui
+]
+}
