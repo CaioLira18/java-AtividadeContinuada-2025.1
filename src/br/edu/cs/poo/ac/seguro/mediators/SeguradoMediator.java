@@ -5,7 +5,11 @@ import java.time.LocalDate;
 import br.edu.cs.poo.ac.seguro.entidades.Endereco;
 
 public class SeguradoMediator {
-	public String validarNome(String nome) {
+    public static SeguradoMediator getInstancia() {
+        return null;
+    }
+
+    public String validarNome(String nome) {
 		return null;
 	}
 	public String validarEndereco(Endereco endereco) {

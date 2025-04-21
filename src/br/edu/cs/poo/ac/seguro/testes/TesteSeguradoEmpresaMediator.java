@@ -3,6 +3,8 @@ package br.edu.cs.poo.ac.seguro.testes;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import br.edu.cs.poo.ac.seguro.entidades.Endereco;
@@ -31,7 +33,7 @@ public class TesteSeguradoEmpresaMediator extends TesteMediator {
 	@Test
 	public void test03() {		
 		String ret = med.validarCnpj("11851715000171");
-		assertEquals("CNPJ com dígito inválido", ret);
+		assertEquals("CNPJ com dï¿½gito invï¿½lido", ret);
 	}
 	@Test
 	public void test04() {		
@@ -59,7 +61,7 @@ public class TesteSeguradoEmpresaMediator extends TesteMediator {
 				"Recife");
 		SeguradoEmpresa seg = new SeguradoEmpresa("ACME LTDA", end, LocalDate.now(),
 				BigDecimal.ZERO, cnpj, 1000.0, false);
-		cadastro.incluir(seg, cnpj);
+		cadastro.incluir((Serializable) seg, cnpj);
 		SeguradoEmpresa segBuscado = med.buscarSeguradoEmpresa(cnpj);
 		assertNotNull(segBuscado);
 	}
@@ -70,7 +72,7 @@ public class TesteSeguradoEmpresaMediator extends TesteMediator {
 				"Recife");
 		SeguradoEmpresa seg = new SeguradoEmpresa("ACME LTDA", end, LocalDate.now(),
 				BigDecimal.ZERO, cnpj, 1000.0, false);
-		cadastro.incluir(seg, cnpj);
+		cadastro.incluir((Serializable) seg, cnpj);
 		SeguradoEmpresa segBuscado = med.buscarSeguradoEmpresa("11851715000174");
 		assertNull(segBuscado);
 	}
@@ -86,7 +88,7 @@ public class TesteSeguradoEmpresaMediator extends TesteMediator {
 		seg = new SeguradoEmpresa("ACME LTDA", null, LocalDate.now(),
 				BigDecimal.ZERO, "11851715000174", 1000.0, false);
 		ret = med.incluirSeguradoEmpresa(seg);
-		assertEquals("Endereço deve ser informado", ret);
+		assertEquals("Endereï¿½o deve ser informado", ret);
 		seg = new SeguradoEmpresa("ACME LTDA", end, null,
 				BigDecimal.ZERO, "11851715000174", 1000.0, false);
 		ret = med.incluirSeguradoEmpresa(seg);
@@ -94,7 +96,7 @@ public class TesteSeguradoEmpresaMediator extends TesteMediator {
 		seg = new SeguradoEmpresa("ACME LTDA", end, LocalDate.now(),
 				BigDecimal.ZERO, "11851715000171", 1000.0, false);
 		ret = med.incluirSeguradoEmpresa(seg);
-		assertEquals("CNPJ com dígito inválido", ret);
+		assertEquals("CNPJ com dï¿½gito invï¿½lido", ret);
 		seg = new SeguradoEmpresa("ACME LTDA", end, LocalDate.now(),
 				BigDecimal.ZERO, "11851715000174", 0.0, false);
 		ret = med.incluirSeguradoEmpresa(seg);
@@ -119,11 +121,11 @@ public class TesteSeguradoEmpresaMediator extends TesteMediator {
 				"Recife");
 		SeguradoEmpresa seg = new SeguradoEmpresa("ACME LTDA", end, LocalDate.now(),
 				BigDecimal.ZERO, cnpj, 1000.0, false);
-		cadastro.incluir(seg, cnpj);
+		cadastro.incluir((Serializable) seg, cnpj);
 		String ret = med.incluirSeguradoEmpresa(seg);
-		assertEquals("CNPJ do segurado empresa já existente", ret);
+		assertEquals("CNPJ do segurado empresa jï¿½ existente", ret);
 		SeguradoEmpresa segBuscado = med.buscarSeguradoEmpresa(cnpj);
-		assertTrue(ComparadoraObjetosSerial.compareObjectsSerial(seg, segBuscado));
+		assertTrue(ComparadoraObjetosSerial.compareObjectsSerial((Serializable) seg, (Serializable) segBuscado));
 		assertNotNull(segBuscado);
 	}
 	
@@ -133,7 +135,7 @@ public class TesteSeguradoEmpresaMediator extends TesteMediator {
 				"Recife");
 		SeguradoEmpresa seg = new SeguradoEmpresa("ACME LTDA.", end, LocalDate.now(),
 				BigDecimal.ZERO, "11851715000174", 1000.0, false);
-		cadastro.incluir(seg, seg.getCnpj());
+		cadastro.incluir((Serializable) seg, seg.getCnpj());
 		seg = new SeguradoEmpresa("    ", end, LocalDate.now(),
 				BigDecimal.ZERO, "11851715000174", 1000.0, false);
 		String ret = med.alterarSeguradoEmpresa(seg);
@@ -141,7 +143,7 @@ public class TesteSeguradoEmpresaMediator extends TesteMediator {
 		seg = new SeguradoEmpresa("ACME LTDA", null, LocalDate.now(),
 				BigDecimal.ZERO, "11851715000174", 1000.0, false);
 		ret = med.alterarSeguradoEmpresa(seg);
-		assertEquals("Endereço deve ser informado", ret);
+		assertEquals("Endereï¿½o deve ser informado", ret);
 		seg = new SeguradoEmpresa("ACME LTDA", end, null,
 				BigDecimal.ZERO, "11851715000174", 1000.0, false);
 		ret = med.alterarSeguradoEmpresa(seg);
@@ -149,7 +151,7 @@ public class TesteSeguradoEmpresaMediator extends TesteMediator {
 		seg = new SeguradoEmpresa("ACME LTDA", end, LocalDate.now(),
 				BigDecimal.ZERO, "11851715000171", 1000.0, false);
 		ret = med.alterarSeguradoEmpresa(seg);
-		assertEquals("CNPJ com dígito inválido", ret);
+		assertEquals("CNPJ com dï¿½gito invï¿½lido", ret);
 		seg = new SeguradoEmpresa("ACME LTDA", end, LocalDate.now(),
 				BigDecimal.ZERO, "11851715000174", 0.0, false);
 		ret = med.alterarSeguradoEmpresa(seg);
@@ -162,7 +164,7 @@ public class TesteSeguradoEmpresaMediator extends TesteMediator {
 				"Recife");
 		SeguradoEmpresa seg = new SeguradoEmpresa("ACME LTDA", end, LocalDate.now(),
 				BigDecimal.ZERO, cnpj, 1000.0, false);
-		cadastro.incluir(seg, cnpj);
+		cadastro.incluir((Serializable) seg, cnpj);
 		end = new Endereco("B Street", "51000000", "44", "ap 302", "USA", "FL",
 				"Miami"); 
 		seg = new SeguradoEmpresa("ACME LTDA 1", end, LocalDate.now(),
@@ -171,7 +173,7 @@ public class TesteSeguradoEmpresaMediator extends TesteMediator {
 		assertEquals(null, ret);
 		SeguradoEmpresa segBuscado = med.buscarSeguradoEmpresa(cnpj);
 		assertNotNull(segBuscado);
-		assertTrue(ComparadoraObjetosSerial.compareObjectsSerial(seg, segBuscado));		
+		assertTrue(ComparadoraObjetosSerial.compareObjectsSerial((Serializable) seg, (Serializable) segBuscado));
 	}
 	@Test
 	public void test14() {
@@ -181,13 +183,13 @@ public class TesteSeguradoEmpresaMediator extends TesteMediator {
 				"Recife");
 		SeguradoEmpresa seg = new SeguradoEmpresa("ACME LTDA", end, LocalDate.now(),
 				BigDecimal.ZERO, cnpjOri, 1000.0, false);
-		cadastro.incluir(seg, cnpjOri);
+		cadastro.incluir((Serializable) seg, cnpjOri);
 		end = new Endereco("B Street", "51000000", "44", "ap 302", "USA", "FL",
 				"Miami"); 
 		seg = new SeguradoEmpresa("ACME LTDA 1", end, LocalDate.now(),
 				BigDecimal.ONE, cnpj, 2000.0, true);
 		String ret = med.alterarSeguradoEmpresa(seg);
-		assertEquals("CNPJ do segurado empresa não existente", ret);
+		assertEquals("CNPJ do segurado empresa nï¿½o existente", ret);
 	}
 	@Test
 	public void test15() {
@@ -196,7 +198,7 @@ public class TesteSeguradoEmpresaMediator extends TesteMediator {
 				"Recife");
 		SeguradoEmpresa seg = new SeguradoEmpresa("ACME LTDA", end, LocalDate.now(),
 				BigDecimal.ZERO, cnpj, 1000.0, false);
-		cadastro.incluir(seg, cnpj);
+		cadastro.incluir((Serializable) seg, cnpj);
 		String ret = med.excluirSeguradoEmpresa(cnpj);
 		assertEquals(null, ret);
 		SeguradoEmpresa segBuscado = med.buscarSeguradoEmpresa(cnpj);
@@ -210,9 +212,9 @@ public class TesteSeguradoEmpresaMediator extends TesteMediator {
 				"Recife");
 		SeguradoEmpresa seg = new SeguradoEmpresa("ACME LTDA", end, LocalDate.now(),
 				BigDecimal.ZERO, cnpjOri, 1000.0, false);
-		cadastro.incluir(seg, cnpjOri);
+		cadastro.incluir((Serializable) seg, cnpjOri);
 		String ret = med.excluirSeguradoEmpresa(cnpj);
-		assertEquals("CNPJ do segurado empresa não existente", ret);
+		assertEquals("CNPJ do segurado empresa nï¿½o existente", ret);
 		SeguradoEmpresa segBuscado = med.buscarSeguradoEmpresa(cnpjOri);
 		assertNotNull(segBuscado);		
 	}

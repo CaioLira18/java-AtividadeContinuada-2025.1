@@ -4,7 +4,7 @@ import java.io.File;
 
 import org.junit.jupiter.api.BeforeEach;
 
-import br.edu.cs.next.oo.persistenciaobjetos.CadastroObjetos;
+import br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
 
 public abstract class TesteAbstrato {
 	protected CadastroObjetos cadastro;
