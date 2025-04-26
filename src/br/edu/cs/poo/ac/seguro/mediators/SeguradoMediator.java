@@ -2,23 +2,51 @@ package br.edu.cs.poo.ac.seguro.mediators;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
+import br.edu.cs.poo.ac.seguro.daos.SeguradoEmpresaDAO;
 import br.edu.cs.poo.ac.seguro.entidades.Endereco;
 
 public class SeguradoMediator {
+	private static SeguradoMediator instancia;
+
     public static SeguradoMediator getInstancia() {
-        return null;
+		if (instancia == null) {
+			instancia = new SeguradoMediator();
+		}
+		return instancia;
     }
 
     public String validarNome(String nome) {
-		return null;
+		if (nome == null || nome.isEmpty()) {
+			return "Nome não pode ser vazio";
+		}
+		return nome;
 	}
+
 	public String validarEndereco(Endereco endereco) {
-		return null;
+		if (endereco == null ) {
+			return "Endereco não pode ser vazio";
+		}
+		return endereco.getLogradouro();
 	}
+
 	public String validarDataCriacao(LocalDate dataCriacao) {
-		return null;
-	}
+		if (dataCriacao == null) {
+			return "Data de Criação não pode estar vazia";
+		}
+        return dataCriacao.toString();
+    }
+
 	public BigDecimal ajustarDebitoBonus(BigDecimal bonus, BigDecimal valorDebito) {
-		return null;
+		if (bonus == null || valorDebito == null) {
+			return BigDecimal.ZERO;
+		}
+
+		if (bonus.compareTo(valorDebito) < 0) {
+			return bonus;
+
+		} else {
+			return valorDebito;
+		}
 	}
 }

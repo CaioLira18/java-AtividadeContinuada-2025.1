@@ -5,10 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SeguradoEmpresaDAO {
-    // Simulação de um banco de dados usando um Map
     private static Map<String, SeguradoEmpresa> banco = new HashMap<>();
 
-    // Singleton para acesso ao DAO
     private static SeguradoEmpresaDAO instancia;
 
     public SeguradoEmpresaDAO() {}

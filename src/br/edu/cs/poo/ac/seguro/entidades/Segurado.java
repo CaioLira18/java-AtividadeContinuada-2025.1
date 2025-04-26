@@ -1,10 +1,11 @@
 package br.edu.cs.poo.ac.seguro.entidades;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
 
-public class Segurado {
+public class Segurado implements Serializable {
 	private String nome;
 	private Endereco endereco;
 	private LocalDate dataCriacao;
@@ -49,16 +50,16 @@ public class Segurado {
 		LocalDate dataAtual = LocalDate.now();
 		return Period.between(dataCriacao, dataAtual).getYears();
 	}
-	
+
 	public void creditarBonus(BigDecimal valor) {
-		if (valor != null) {			
-			bonus.add(valor);
+		if (valor != null) {
+			bonus = bonus.add(valor);
 		}
 	}
-	
+
 	public void debitarBonus(BigDecimal valor) {
 		if (valor != null) {
-			bonus.subtract(valor);
+			bonus = bonus.subtract(valor);
 		}
 	}
 }

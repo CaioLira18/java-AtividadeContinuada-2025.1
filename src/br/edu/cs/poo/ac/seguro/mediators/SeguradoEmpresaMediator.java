@@ -7,6 +7,7 @@ public class SeguradoEmpresaMediator {
 	private static SeguradoEmpresaMediator instancia;
 	private SeguradoEmpresaDAO dao;
 
+
 	private SeguradoEmpresaMediator() {
 		this.dao = SeguradoEmpresaDAO.getInstancia();
 	}
@@ -19,59 +20,7 @@ public class SeguradoEmpresaMediator {
 	}
 
 	public String validarCnpj(String cnpj) {
-		if (cnpj == null || cnpj.isEmpty()) {
-			return "CNPJ não pode ser vazio";
-		}
-
-		cnpj = cnpj.replaceAll("[^0-9]", "");
-
-		if (cnpj.length() != 14) {
-			return "CNPJ deve conter 14 dígitos";
-		}
-
-		// Validação de dígitos repetidos
-		boolean digitosIguais = true;
-		for (int i = 1; i < cnpj.length(); i++) {
-			if (cnpj.charAt(i) != cnpj.charAt(0)) {
-				digitosIguais = false;
-				break;
-			}
-		}
-		if (digitosIguais) {
-			return "CNPJ inválido: todos os dígitos são iguais";
-		}
-
-		// Validação do primeiro dígito verificador
-		int soma = 0;
-		int peso = 5;
-		for (int i = 0; i < 12; i++) {
-			int num = cnpj.charAt(i) - '0';
-			soma += num * peso;
-			peso = (peso == 2) ? 9 : peso - 1;
-		}
-
-		int resto = soma % 11;
-		int dv1 = (resto < 2) ? 0 : 11 - resto;
-		if (dv1 != (cnpj.charAt(12) - '0')) {
-			return "CNPJ inválido: primeiro dígito verificador incorreto";
-		}
-
-		// Validação do segundo dígito verificador
-		soma = 0;
-		peso = 6;
-		for (int i = 0; i < 13; i++) {
-			int num = cnpj.charAt(i) - '0';
-			soma += num * peso;
-			peso = (peso == 2) ? 9 : peso - 1;
-		}
-
-		resto = soma % 11;
-		int dv2 = (resto < 2) ? 0 : 11 - resto;
-		if (dv2 != (cnpj.charAt(13) - '0')) {
-			return "CNPJ inválido: segundo dígito verificador incorreto";
-		}
-
-		return null; // CNPJ válido
+		return ValidadorCpfCnpj.ehCnpjValido(cnpj);
 	}
 
 	public String validarFaturamento(double faturamento) {

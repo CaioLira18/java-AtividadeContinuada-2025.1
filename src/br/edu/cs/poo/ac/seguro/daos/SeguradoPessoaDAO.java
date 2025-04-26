@@ -8,6 +8,7 @@ import java.io.Serializable;
 /*
  * As classes Segurado e SeguradoPessoa devem implementar Serializable.
  */
+
 public class SeguradoPessoaDAO extends DAOGenerico {
 	public SeguradoPessoaDAO() {
 		cadastro = new CadastroObjetos(SeguradoPessoa.class);

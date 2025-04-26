@@ -7,16 +7,18 @@ import br.edu.cs.poo.ac.seguro.entidades.SeguradoPessoa;
 
 public class SeguradoPessoaMediator {
 	private static SeguradoPessoaMediator instancia;
+
 	public static SeguradoPessoaMediator getInstancia() {
     	if(instancia == null) {
 			instancia = new SeguradoPessoaMediator();
 		}
 		return instancia;
 	}
+
 	private SeguradoPessoaDAO dao;
 
 	public String validarCpf(String cpf) {
-		return null;
+		return ValidadorCpfCnpj.ehCpfValido(cpf);
 	}
 
 	public String validarRenda(double renda) {
@@ -83,14 +85,13 @@ public class SeguradoPessoaMediator {
 			return "Erro ao excluir segurado";
 		}
 
-		return null; // Excluído com sucesso
+		return null;
 	}
 
 	public SeguradoPessoa buscarSeguradoPessoa(String cpf) {
 		if (cpf == null || cpf.trim().isEmpty()) {
 			return null;
 		}
-
 		return dao.buscar(cpf);
 	}
 
