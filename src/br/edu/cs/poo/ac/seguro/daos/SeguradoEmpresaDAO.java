@@ -1,51 +1,45 @@
 package br.edu.cs.poo.ac.seguro.daos;
 
+import br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
 import br.edu.cs.poo.ac.seguro.entidades.SeguradoEmpresa;
-import java.util.HashMap;
-import java.util.Map;
 
-public class SeguradoEmpresaDAO {
-    private static Map<String, SeguradoEmpresa> banco = new HashMap<>();
+public class SeguradoEmpresaDAO extends DAOGenerico {
 
-    private static SeguradoEmpresaDAO instancia;
-
-    public SeguradoEmpresaDAO() {}
-
-    public static SeguradoEmpresaDAO getInstancia() {
-        if (instancia == null) {
-            instancia = new SeguradoEmpresaDAO();
-        }
-        return instancia;
-    }
-
-    public boolean alterar(SeguradoEmpresa seg) {
-        if (seg == null || seg.getCnpj() == null || !banco.containsKey(seg.getCnpj())) {
-            return false;
-        }
-        banco.put(seg.getCnpj(), seg);
-        return true;
+    public SeguradoEmpresaDAO() {
+        cadastro = new CadastroObjetos(SeguradoEmpresa.class);
     }
 
     public SeguradoEmpresa buscar(String cnpj) {
-        if (cnpj == null || !banco.containsKey(cnpj)) {
-            return null;
-        }
-        return banco.get(cnpj);
+        return (SeguradoEmpresa) cadastro.buscar(cnpj);
     }
 
-    public boolean incluir(SeguradoEmpresa seg) {
-        if (seg == null || seg.getCnpj() == null || banco.containsKey(seg.getCnpj())) {
+    public boolean incluir(SeguradoEmpresa seguradoEmpresa) {
+        if (buscar(seguradoEmpresa.getCnpj()) != null){
             return false;
         }
-        banco.put(seg.getCnpj(), seg);
-        return true;
+        else {
+            cadastro.incluir(seguradoEmpresa, seguradoEmpresa.getCnpj());
+            return true;
+        }
+    }
+
+    public boolean alterar(SeguradoEmpresa seguradoEmpresa) {
+        if (buscar(seguradoEmpresa.getCnpj()) == null) {
+            return false;
+        }
+        else {
+            cadastro.alterar(seguradoEmpresa, seguradoEmpresa.getCnpj());
+            return true;
+        }
     }
 
     public boolean excluir(String cnpj) {
-        if (cnpj == null || !banco.containsKey(cnpj)) {
+        if (buscar(cnpj) == null) {
             return false;
         }
-        banco.remove(cnpj);
-        return true;
+        else {
+            cadastro.excluir(cnpj);
+            return true;
+        }
     }
 }

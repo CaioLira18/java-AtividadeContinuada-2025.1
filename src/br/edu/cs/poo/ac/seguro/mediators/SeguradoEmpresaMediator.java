@@ -4,128 +4,84 @@ import br.edu.cs.poo.ac.seguro.daos.SeguradoEmpresaDAO;
 import br.edu.cs.poo.ac.seguro.entidades.SeguradoEmpresa;
 
 public class SeguradoEmpresaMediator {
-	private static SeguradoEmpresaMediator instancia;
-	private SeguradoEmpresaDAO dao;
 
+	private SeguradoEmpresaDAO dao = new SeguradoEmpresaDAO();
+	private static SeguradoEmpresaMediator instancia = new SeguradoEmpresaMediator();
 
-	private SeguradoEmpresaMediator() {
-		this.dao = SeguradoEmpresaDAO.getInstancia();
-	}
+	private SeguradoEmpresaMediator() {}
 
 	public static SeguradoEmpresaMediator getInstancia() {
-		if (instancia == null) {
-			instancia = new SeguradoEmpresaMediator();
-		}
 		return instancia;
 	}
 
 	public String validarCnpj(String cnpj) {
-		return ValidadorCpfCnpj.ehCnpjValido(cnpj);
+		if (StringUtils.ehNuloOuBranco(cnpj)) {
+			return "CNPJ deve ser informado";
+		}
+		if (cnpj.length() != 14) {
+			return "CNPJ deve ter 14 caracteres";
+		}
+		if (!StringUtils.temSomenteNumeros(cnpj) || !ValidadorCpfCnpj.ehCnpjValido(cnpj)) {
+			return "CNPJ com dígito inválido";
+		}
+		return null;
 	}
 
 	public String validarFaturamento(double faturamento) {
 		if (faturamento <= 0) {
-			return "O faturamento deve ser maior que zero";
+			return "Faturamento deve ser maior que zero";
 		}
-
-		if (faturamento > 1000000000) {
-			return "Faturamento excede o limite permitido";
-		}
-
-		return null; // Faturamento válido
-	}
-
-	public String validarSeguradoEmpresa(SeguradoEmpresa seg) {
-		if (seg == null) {
-			return "Segurado não pode ser nulo";
-		}
-
-		if (seg.getNome() == null || seg.getNome().trim().isEmpty()) {
-			return "Nome da empresa não pode ser vazio";
-		}
-
-		if (seg.getEndereco() == null) {
-			return "Endereço não pode ser nulo";
-		}
-
-		if (seg.getDataAbertura() == null) {
-			return "Data de abertura não pode ser nula";
-		}
-
-		String validacaoCnpj = validarCnpj(seg.getCnpj());
-		if (validacaoCnpj != null) {
-			return validacaoCnpj;
-		}
-
-		String validacaoFaturamento = validarFaturamento(seg.getFaturamento());
-		if (validacaoFaturamento != null) {
-			return validacaoFaturamento;
-		}
-
-		return null; // Segurado válido
+		return null;
 	}
 
 	public String incluirSeguradoEmpresa(SeguradoEmpresa seg) {
-		String validacao = validarSeguradoEmpresa(seg);
-		if (validacao != null) {
-			return validacao;
+		String msg = validarSeguradoEmpresa(seg);
+		if (msg != null) return msg;
+
+		if (dao.buscar(seg.getCnpj()) != null) {
+			return "CNPJ do segurado empresa já existente";
 		}
 
-		SeguradoEmpresa existente = dao.buscar(seg.getCnpj());
-		if (existente != null) {
-			return "Já existe um segurado com este CNPJ";
-		}
-
-		boolean resultado = dao.incluir(seg);
-		if (!resultado) {
-			return "Erro ao incluir segurado";
-		}
-
-		return null; // Incluído com sucesso
+		dao.incluir(seg);
+		return null;
 	}
 
 	public String alterarSeguradoEmpresa(SeguradoEmpresa seg) {
-		String validacao = validarSeguradoEmpresa(seg);
-		if (validacao != null) {
-			return validacao;
+		String msg = validarSeguradoEmpresa(seg);
+		if (msg != null) return msg;
+
+		if (dao.buscar(seg.getCnpj()) == null) {
+			return "CNPJ do segurado empresa não existente";
 		}
 
-		SeguradoEmpresa existente = dao.buscar(seg.getCnpj());
-		if (existente == null) {
-			return "Segurado não encontrado";
-		}
-
-		boolean resultado = dao.alterar(seg);
-		if (!resultado) {
-			return "Erro ao alterar segurado";
-		}
-
-		return null; // Alterado com sucesso
+		dao.alterar(seg);
+		return null;
 	}
 
 	public String excluirSeguradoEmpresa(String cnpj) {
-		if (cnpj == null || cnpj.trim().isEmpty()) {
-			return "CNPJ não pode ser vazio";
+		if (dao.buscar(cnpj) == null) {
+			return "CNPJ do segurado empresa não existente";
 		}
-
-		SeguradoEmpresa existente = dao.buscar(cnpj);
-		if (existente == null) {
-			return "Segurado não encontrado";
-		}
-
-		boolean resultado = dao.excluir(cnpj);
-		if (!resultado) {
-			return "Erro ao excluir segurado";
-		}
-
-		return null; // Excluído com sucesso
+		dao.excluir(cnpj);
+		return null;
 	}
 
 	public SeguradoEmpresa buscarSeguradoEmpresa(String cnpj) {
-		if (cnpj == null || cnpj.trim().isEmpty()) {
-			return null;
-		}
-
 		return dao.buscar(cnpj);
+	}
+
+	public String validarSeguradoEmpresa(SeguradoEmpresa seg) {
+		if (seg == null) return "Segurado inválido";
+		if (StringUtils.ehNuloOuBranco(seg.getNome()))
+			return "Nome deve ser informado";
+		if (seg.getEndereco() == null)
+			return "Endereço deve ser informado";
+		if (seg.getDataAbertura() == null)
+			return "Data da abertura deve ser informada";
+
+		String msg = validarCnpj(seg.getCnpj());
+		if (msg != null) return msg;
+
+		return validarFaturamento(seg.getFaturamento());
 	}
 }

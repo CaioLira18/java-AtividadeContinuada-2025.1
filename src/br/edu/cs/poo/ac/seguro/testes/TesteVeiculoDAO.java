@@ -19,7 +19,8 @@ public class TesteVeiculoDAO extends TesteDAO {
 	@Test
 	public void teste01() {
 		String placa = "00000000";
-		cadastro.incluir((Serializable) new Veiculo(placa, 2000, null, null, CategoriaVeiculo.BASICO), placa);
+		cadastro.incluir((Serializable) new Veiculo(placa, 2000, null, null, CategoriaVeiculo.BASICO),
+				placa);
 		Veiculo ve = dao.buscar(placa);
 		Assertions.assertNotNull(ve); 
 	}

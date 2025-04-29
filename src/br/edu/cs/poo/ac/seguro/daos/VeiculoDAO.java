@@ -1,40 +1,42 @@
 package br.edu.cs.poo.ac.seguro.daos;
 
+import br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
 import br.edu.cs.poo.ac.seguro.entidades.Veiculo;
 
-import java.util.HashMap;
-import java.util.Map;
+public class VeiculoDAO extends DAOGenerico{
 
-public class VeiculoDAO {
-    private static Map<String, Veiculo> banco = new HashMap<>();
+    public VeiculoDAO() {
+        cadastro = new CadastroObjetos(Veiculo.class);
+    }
+
     public Veiculo buscar(String placa) {
-        if (placa == null || !banco.containsKey(placa)) {
-            return null;
-        }
-        return banco.get(placa);
+        return (Veiculo) cadastro.buscar(placa);
     }
-
-    public boolean excluir(String placa) {
-        if (placa == null || !banco.containsKey(placa)) {
-            return false;
-        }
-        banco.remove(placa);
-        return true;
-    }
-
     public boolean incluir(Veiculo veiculo) {
-        if (veiculo == null || veiculo.getPlaca() == null || banco.containsKey(veiculo.getPlaca())) {
+        if (buscar(veiculo.getPlaca()) != null) {
             return false;
         }
-        banco.put(veiculo.getPlaca(), veiculo);
-        return true;
+        else {
+            cadastro.incluir(veiculo, veiculo.getPlaca());
+            return true;
+        }
     }
-
     public boolean alterar(Veiculo veiculo) {
-        if (veiculo == null || veiculo.getPlaca() == null || !banco.containsKey(veiculo.getPlaca())) {
+        if (buscar(veiculo.getPlaca()) == null) {
             return false;
         }
-        banco.put(veiculo.getPlaca(), veiculo);
-        return true;
+        else {
+            cadastro.alterar(veiculo, veiculo.getPlaca());
+            return true;
+        }
+    }
+    public boolean excluir(String placa) {
+        if (buscar(placa) == null) {
+            return false;
+        }
+        else {
+            cadastro.excluir(placa);
+            return true;
+        }
     }
 }

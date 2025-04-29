@@ -1,122 +1,90 @@
 package br.edu.cs.poo.ac.seguro.mediators;
 
-import br.edu.cs.poo.ac.seguro.daos.SeguradoEmpresaDAO;
+import java.time.LocalDate;
+
 import br.edu.cs.poo.ac.seguro.daos.SeguradoPessoaDAO;
-import br.edu.cs.poo.ac.seguro.entidades.SeguradoEmpresa;
 import br.edu.cs.poo.ac.seguro.entidades.SeguradoPessoa;
 
+@SuppressWarnings("unused")
 public class SeguradoPessoaMediator {
-	private static SeguradoPessoaMediator instancia;
 
-	public static SeguradoPessoaMediator getInstancia() {
-    	if(instancia == null) {
-			instancia = new SeguradoPessoaMediator();
-		}
-		return instancia;
-	}
+    private SeguradoMediator seguradoMediator = SeguradoMediator.getInstancia();
+    private SeguradoPessoaDAO dao = new SeguradoPessoaDAO();
 
-	private SeguradoPessoaDAO dao;
+    private static SeguradoPessoaMediator instancia = new SeguradoPessoaMediator();
 
-	public String validarCpf(String cpf) {
-		return ValidadorCpfCnpj.ehCpfValido(cpf);
-	}
+    private SeguradoPessoaMediator() {
+    }
 
-	public String validarRenda(double renda) {
-		if(renda < 0) {
-			return "O renda deve ser maior que zero";
-		}
+    public static SeguradoPessoaMediator getInstancia() {
+        return instancia;
+    }
 
-		if(renda > 1000000000) {
-			return "Faturamento excede o limite permitido";
-		}
-		return null;
-	}
+    public String validarCpf(String cpf) {
+        if (StringUtils.ehNuloOuBranco(cpf))
+            return "CPF deve ser informado";
+        if (cpf.length() != 11)
+            return "CPF deve ter 11 caracteres";
+        if (!ValidadorCpfCnpj.ehCpfValido(cpf))
+            return "CPF com dígito inválido";
 
-	public String incluirSeguradoPessoa(SeguradoPessoa seg) {
-		String validacao = validarSeguradoPessoa(seg);
-		if (validacao != null) {
-			return validacao;
-		}
+        return null;
+    }
 
-		SeguradoPessoa existente = dao.buscar(seg.getCpf());
-		if (existente != null) {
-			return "Já existe um segurado com este CPF";
-		}
+    public String validarRenda(double renda) {
+        if (renda < 0)
+            return "Renda deve ser maior ou igual à zero";
+        return null;
+    }
 
-		boolean resultado = dao.incluir(seg);
-		if (!resultado) {
-			return "Erro ao incluir segurado";
-		}
+    public String validarSeguradoPessoa(SeguradoPessoa seg) {
+        if (seg == null) return "Segurado não pode ser nulo";
+        if (StringUtils.ehNuloOuBranco(seg.getNome()))
+            return "Nome deve ser informado";
+        if (seg.getEndereco() == null)
+            return "Endereço deve ser informado";
+        if (seg.getDataNascimento() == null)
+            return "Data do nascimento deve ser informada";
+        String erroCpf = validarCpf(seg.getCpf());
+        if (erroCpf != null)
+            return erroCpf;
+        String erroRenda = validarRenda(seg.getRenda());
+        if (erroRenda != null)
+            return erroRenda;
+        return null;
+    }
 
-		return null;
-	}
+    public String incluirSeguradoPessoa(SeguradoPessoa seg) {
+        String erro = validarSeguradoPessoa(seg);
+        if (erro != null) return erro;
 
-	public String alterarSeguradoPessoa(SeguradoPessoa seg) {
-		String validacao = validarSeguradoPessoa(seg);
-		if (validacao != null) {
-			return validacao;
-		}
+        boolean sucesso = dao.incluir(seg);
+        if (!sucesso) {
+            return "CPF do segurado pessoa já existente";
+        }
+        return null;
+    }
 
-		SeguradoPessoa existente = dao.buscar(seg.getCpf());
-		if (existente == null) {
-			return "Segurado não encontrado";
-		}
+    public String alterarSeguradoPessoa(SeguradoPessoa seg) {
+        String erro = validarSeguradoPessoa(seg);
+        if (erro != null) return erro;
 
-		boolean resultado = dao.alterar(seg);
-		if (!resultado) {
-			return "Erro ao alterar segurado";
-		}
+        boolean sucesso = dao.alterar(seg);
+        if (!sucesso) {
+            return "CPF do segurado pessoa não existente";
+        }
+        return null;
+    }
 
-		return null; // Alterado com sucesso
-	}
+    public String excluirSeguradoPessoa(String cpf) {
+        boolean sucesso = dao.excluir(cpf);
+        if (!sucesso) {
+            return "CPF do segurado pessoa não existente";
+        }
+        return null;
+    }
 
-	public String excluirSeguradoPessoa(String cpf) {
-		if (cpf == null || cpf.trim().isEmpty()) {
-			return "CNPJ não pode ser vazio";
-		}
-
-		SeguradoPessoa existente = dao.buscar(cpf);
-		if (existente == null) {
-			return "Segurado não encontrado";
-		}
-
-		boolean resultado = dao.excluir(cpf);
-		if (!resultado) {
-			return "Erro ao excluir segurado";
-		}
-
-		return null;
-	}
-
-	public SeguradoPessoa buscarSeguradoPessoa(String cpf) {
-		if (cpf == null || cpf.trim().isEmpty()) {
-			return null;
-		}
-		return dao.buscar(cpf);
-	}
-
-	public String validarSeguradoPessoa(SeguradoPessoa seg) {
-		if (seg == null) {
-			return "Segurado não pode ser nulo";
-		}
-
-		if (seg.getNome() == null || seg.getNome().trim().isEmpty()) {
-			return "Nome da Pessoa não pode ser vazio";
-		}
-
-		if (seg.getEndereco() == null) {
-			return "Endereço não pode ser nulo";
-		}
-
-		String validacaoCPF = validarCpf(seg.getCpf());
-		if (validacaoCPF != null) {
-			return validacaoCPF;
-		}
-
-		String validacaoRenda = validarRenda(seg.getRenda());
-		if (validacaoRenda != null) {
-			return validacaoRenda;
-		}
-		return null;
-	}
+    public SeguradoPessoa buscarSeguradoPessoa(String cpf) {
+        return dao.buscar(cpf);
+    }
 }
