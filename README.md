@@ -65,22 +65,6 @@ Este projeto implementa um sistema de gerenciamento de seguros, com foco em segu
 - **Polimorfismo**: Suporte inicial para polimorfismo que será expandido em versões futuras
 - **Testes Automatizados**: Cada DAO possui sua classe de teste correspondente para validar operações CRUD
 
-## Próximos Passos
-
-- Implementação de polimorfismo para reduzir duplicação de código nos DAOs
-- Melhorias na interface do usuário
-- Adição de relatórios e estatísticas de sinistros
-
-## Contribuindo
-
-Este projeto faz parte de uma atividade acadêmica de Programação Orientada a Objetos. Para contribuir:
-
-1. Faça um fork do projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/nova-funcionalidade`)
-3. Commit suas mudanças (`git commit -m 'Adiciona nova funcionalidade'`)
-4. Push para a branch (`git push origin feature/nova-funcionalidade`)
-5. Abra um Pull Request
-
 ## Autores
 
 Desenvolvido como atividade acadêmica para a disciplina de Programação Orientada a Objetos.
