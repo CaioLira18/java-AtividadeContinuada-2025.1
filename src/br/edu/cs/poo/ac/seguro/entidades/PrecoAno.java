@@ -1,18 +1,36 @@
 package br.edu.cs.poo.ac.seguro.entidades;
 
-public class PrecoAno {
+import java.io.Serializable;
+import java.math.BigDecimal;
+
+public class PrecoAno implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	private int ano;
-	private double preco;
-	
-	public PrecoAno(int ano, double preco) {
-		super();
-		this.ano = ano;
-		this.preco = preco;
+	private double valorMaximo;
+
+	public PrecoAno() {
+		// Construtor padrão exigido para serialização
 	}
+
+	public PrecoAno(int ano, double valorMaximo) {
+		this.ano = ano;
+		this.valorMaximo = valorMaximo;
+	}
+
 	public int getAno() {
 		return ano;
 	}
-	public double getPreco() {
-		return preco;
+
+	public void setAno(int ano) {
+		this.ano = ano;
+	}
+
+	public double getValorMaximo() {
+		return valorMaximo;
+	}
+
+	public void setValorMaximo(double valorMaximo) {
+		this.valorMaximo = valorMaximo;
 	}
 }

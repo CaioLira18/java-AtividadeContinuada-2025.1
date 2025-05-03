@@ -4,13 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @AllArgsConstructor
-public class Sinistro {
+public class Sinistro implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String numero;
     private Veiculo veiculo;
     private LocalDateTime dataHoraSinistro;

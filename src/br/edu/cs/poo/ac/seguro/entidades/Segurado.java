@@ -17,7 +17,10 @@ public class Segurado implements Serializable {
 		this.dataCriacao = dataCriacao;
 		this.bonus = bonus;
 	}
-	
+
+	public void setBonus(BigDecimal bonus) {
+		this.bonus = bonus;
+	}
 	public String getNome() {
 		return nome;
 	}

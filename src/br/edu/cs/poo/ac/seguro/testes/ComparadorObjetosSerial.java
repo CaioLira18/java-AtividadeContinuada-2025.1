@@ -1,11 +1,13 @@
 package br.edu.cs.poo.ac.seguro.testes;
 
+import br.edu.cs.poo.ac.seguro.entidades.Apolice;
+
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 class ComparadoraObjetosSerial {
-    static boolean compareObjectsSerial(Serializable s1, Serializable s2) {
+    static boolean compareObjectsSerial(Serializable s1, Apolice s2) {
         ByteArrayOutputStream  bos1 = null;
         ByteArrayOutputStream  bos2 = null;
         ObjectOutputStream oos1 = null;
