@@ -1,7 +1,5 @@
 package br.edu.cs.poo.ac.seguro.mediators;
 
-import java.time.LocalDate;
-
 import br.edu.cs.poo.ac.seguro.daos.SeguradoPessoaDAO;
 import br.edu.cs.poo.ac.seguro.entidades.SeguradoPessoa;
 
@@ -25,7 +23,7 @@ public class SeguradoPessoaMediator {
             return "CPF deve ser informado";
         if (cpf.length() != 11)
             return "CPF deve ter 11 caracteres";
-        if (!ValidadorCpfCnpjUtil.isCpfValido(cpf))
+        if (!ValidadorCpfCnpj.ehCpfValido(cpf))
             return "CPF com dígito inválido";
 
         return null;

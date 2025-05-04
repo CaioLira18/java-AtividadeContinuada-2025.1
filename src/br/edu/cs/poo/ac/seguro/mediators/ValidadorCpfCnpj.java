@@ -1,8 +1,8 @@
 package br.edu.cs.poo.ac.seguro.mediators;
 
-public class ValidadorCpfCnpjUtil {
+public class ValidadorCpfCnpj {
 
-    public static boolean isCpfValido(String cpf) {
+    public static boolean ehCpfValido(String cpf) {
         // Remove caracteres não numéricos
         cpf = cpf.replaceAll("[^0-9]", "");
 
@@ -32,7 +32,7 @@ public class ValidadorCpfCnpjUtil {
                 Character.getNumericValue(cpf.charAt(10)) == digito2;
     }
 
-    public static boolean isCnpjValido(String cnpj) {
+    public static boolean ehCnpjValido(String cnpj) {
         // Remove caracteres não numéricos
         cnpj = cnpj.replaceAll("[^0-9]", "");
 
