@@ -21,7 +21,7 @@ public class SeguradoEmpresaMediator {
 		if (cnpj.length() != 14) {
 			return "CNPJ deve ter 14 caracteres";
 		}
-		if (!StringUtils.temSomenteNumeros(cnpj) || !ValidadorCpfCnpj.ehCnpjValido(cnpj)) {
+		if (!StringUtils.temSomenteNumeros(cnpj) || !ValidadorCpfCnpjUtil.isCnpjValido(cnpj)) {
 			return "CNPJ com dígito inválido";
 		}
 		return null;

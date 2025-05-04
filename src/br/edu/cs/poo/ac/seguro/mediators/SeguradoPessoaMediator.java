@@ -25,7 +25,7 @@ public class SeguradoPessoaMediator {
             return "CPF deve ser informado";
         if (cpf.length() != 11)
             return "CPF deve ter 11 caracteres";
-        if (!ValidadorCpfCnpj.ehCpfValido(cpf))
+        if (!ValidadorCpfCnpjUtil.isCpfValido(cpf))
             return "CPF com dígito inválido";
 
         return null;

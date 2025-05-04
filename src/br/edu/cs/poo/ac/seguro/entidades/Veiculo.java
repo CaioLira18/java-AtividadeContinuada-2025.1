@@ -7,16 +7,16 @@ public class Veiculo implements Serializable {
 
 	private String placa;
 	private int ano;
-	private int categoria;
-	private SeguradoPessoa proprietarioPessoa;
 	private SeguradoEmpresa proprietarioEmpresa;
+	private SeguradoPessoa proprietarioPessoa;
+	private int categoria;
 
-	public Veiculo(String placa, int ano, CategoriaVeiculo categoria, SeguradoPessoa proprietarioPessoa, SeguradoEmpresa proprietarioEmpresa) {
+	public Veiculo(String placa, int ano, SeguradoEmpresa proprietarioEmpresa, SeguradoPessoa proprietarioPessoa, CategoriaVeiculo categoria) {
 		this.placa = placa;
 		this.ano = ano;
-		this.categoria = categoria.ordinal();
 		this.proprietarioPessoa = proprietarioPessoa;
 		this.proprietarioEmpresa = proprietarioEmpresa;
+		this.categoria = categoria.ordinal();
 	}
 
 	// Construtor padrão exigido para serialização

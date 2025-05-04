@@ -6,11 +6,13 @@ import java.time.LocalDate;
 import java.time.Period;
 
 public class Segurado implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	private String nome;
 	private Endereco endereco;
 	private LocalDate dataCriacao;
 	private BigDecimal bonus;
-	
+
 	public Segurado(String nome, Endereco endereco, LocalDate dataCriacao, BigDecimal bonus) {
 		this.nome = nome;
 		this.endereco = endereco;
@@ -18,40 +20,41 @@ public class Segurado implements Serializable {
 		this.bonus = bonus;
 	}
 
-	public void setBonus(BigDecimal bonus) {
-		this.bonus = bonus;
-	}
 	public String getNome() {
 		return nome;
 	}
-	
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
+
 	public Endereco getEndereco() {
 		return endereco;
 	}
-	
+
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
-	
+
+	// Métodos protegidos para dataCriacao
 	protected LocalDate getDataCriacao() {
 		return dataCriacao;
 	}
-	
+
 	protected void setDataCriacao(LocalDate dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
-	
+
 	public BigDecimal getBonus() {
 		return bonus;
 	}
-	
+
+	public void setBonus(BigDecimal bonus) {
+		this.bonus = bonus;
+	}
+
 	public int getIdade() {
-		LocalDate dataAtual = LocalDate.now();
-		return Period.between(dataCriacao, dataAtual).getYears();
+		return Period.between(dataCriacao, LocalDate.now()).getYears();
 	}
 
 	public void creditarBonus(BigDecimal valor) {

@@ -13,29 +13,23 @@ public class Apolice implements Serializable {
     private BigDecimal valorFranquia;
     private Veiculo veiculo;
     private LocalDate dataInicioVigencia;
-    private LocalDate dataFimVigencia; // Novo campo
+//    private LocalDate dataFimVigencia; // Novo campo
 
-    public Apolice(String numero, Veiculo vel, BigDecimal valorPremio, BigDecimal valorFranquia,
-                   LocalDate now) {
-        this.numero = numero;
-        this.veiculo = vel;
-        this.valorPremio = valorPremio;
-        this.valorFranquia = valorFranquia;
-        this.valorMaximoSegurado = bigDecimal;
-        this.dataInicioVigencia = now;
-        this.dataFimVigencia = fim;
-    }
+//    public Apolice(String numero, Veiculo veiculo, BigDecimal valorPremio,
+//                   BigDecimal valorFranquia, BigDecimal valorMaximoSegurado,
+//                   LocalDate dataInicioVigencia) {
+//        this(numero, valorMaximoSegurado, valorPremio, valorFranquia,
+//                veiculo, dataInicioVigencia);
+//    }
 
-    public Apolice(String numero, BigDecimal valorMaximoSegurado, BigDecimal valorPremio,
-                   BigDecimal valorFranquia, Veiculo veiculo, LocalDate dataInicioVigencia,
-                   LocalDate dataFimVigencia) {
+    public Apolice(String numero, Veiculo veiculo, BigDecimal valorPremio, BigDecimal valorFranquia, BigDecimal valorMaximoSegurado, LocalDate dataInicioVigencia) {
         this.numero = numero;
         this.valorMaximoSegurado = valorMaximoSegurado;
         this.valorPremio = valorPremio;
         this.valorFranquia = valorFranquia;
         this.veiculo = veiculo;
         this.dataInicioVigencia = dataInicioVigencia;
-        this.dataFimVigencia = dataFimVigencia;
+//        this.dataFimVigencia = dataFimVigencia;
     }
 
     public String getNumero() {
@@ -86,11 +80,11 @@ public class Apolice implements Serializable {
         this.dataInicioVigencia = dataInicioVigencia;
     }
 
-    public LocalDate getDataFimVigencia() {
-        return dataFimVigencia;
-    }
-
-    public void setDataFimVigencia(LocalDate dataFimVigencia) {
-        this.dataFimVigencia = dataFimVigencia;
-    }
+//    public LocalDate getDataFimVigencia() {
+//        return dataFimVigencia;
+//    }
+//
+//    public void setDataFimVigencia(LocalDate dataFimVigencia) {
+//        this.dataFimVigencia = dataFimVigencia;
+//    }
 }

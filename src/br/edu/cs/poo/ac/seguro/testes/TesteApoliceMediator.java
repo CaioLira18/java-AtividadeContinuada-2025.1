@@ -4,7 +4,6 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +20,7 @@ import br.edu.cs.poo.ac.seguro.entidades.Veiculo;
 import br.edu.cs.poo.ac.seguro.mediators.ApoliceMediator;
 import br.edu.cs.poo.ac.seguro.mediators.DadosVeiculo;
 import br.edu.cs.poo.ac.seguro.mediators.RetornoInclusaoApolice;
-
+//import br.edu.cs.poo.divisao.RetornoDivisao;
 
 public class TesteApoliceMediator extends TesteMediator {
 
@@ -399,7 +398,7 @@ public class TesteApoliceMediator extends TesteMediator {
 	}
 	@Test
 	public void test019() {
-		Optional<Apolice> ap = mediator.buscarApolice(NUM_AP);
+		Apolice ap = mediator.buscarApolice(NUM_AP);
 		Assertions.assertNull(ap);
 	}
 	@Test
@@ -407,7 +406,7 @@ public class TesteApoliceMediator extends TesteMediator {
 		Apolice apEsp = new Apolice(NUM_AP, null, new BigDecimal("2667.60"),
 				new BigDecimal("1952.00"), new BigDecimal("57000.00"), LocalDate.now());
 		cadastro.incluir(apEsp, NUM_AP);
-		Optional<Apolice> ap = mediator.buscarApolice(NUM_AP);
+		Apolice ap = mediator.buscarApolice(NUM_AP);
 		Assertions.assertNotNull(ap);
 		Assertions.assertTrue(ComparadoraObjetosSerial.compareObjectsSerial(apEsp, ap));
 	}
