@@ -219,16 +219,18 @@ public class ApoliceMediator {
 		return daoApo.findByNumero(numero).orElse(null);
 	}
 
+
+
 	public String excluirApolice(String numero) {
 		if (numero == null || numero.isBlank()) {
-			return "Número inválido.";
+			return "Número deve ser informado";
+		}
+		if (numero.isEmpty()){
+			return "Número deve ser informado";
+
 		}
 
 		Optional<Apolice> apoliceOpt = daoApo.findByNumero(numero);
-		if (apoliceOpt.isEmpty()) {
-			return "Apólice não encontrada.";
-		}
-
 		Apolice apolice = apoliceOpt.get();
 		int anoVigencia = apolice.getDataInicioVigencia().getYear();
 

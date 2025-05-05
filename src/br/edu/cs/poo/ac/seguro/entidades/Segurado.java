@@ -37,11 +37,11 @@ public class Segurado implements Serializable {
 	}
 
 	// Métodos protegidos para dataCriacao
-	protected LocalDate getDataCriacao() {
+	public LocalDate getDataCriacao() {
 		return dataCriacao;
 	}
 
-	protected void setDataCriacao(LocalDate dataCriacao) {
+	public void setDataCriacao(LocalDate dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
 
