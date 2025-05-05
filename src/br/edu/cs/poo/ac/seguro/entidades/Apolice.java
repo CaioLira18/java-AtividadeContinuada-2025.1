@@ -13,14 +13,6 @@ public class Apolice implements Serializable {
     private BigDecimal valorFranquia;
     private Veiculo veiculo;
     private LocalDate dataInicioVigencia;
-//    private LocalDate dataFimVigencia; // Novo campo
-
-//    public Apolice(String numero, Veiculo veiculo, BigDecimal valorPremio,
-//                   BigDecimal valorFranquia, BigDecimal valorMaximoSegurado,
-//                   LocalDate dataInicioVigencia) {
-//        this(numero, valorMaximoSegurado, valorPremio, valorFranquia,
-//                veiculo, dataInicioVigencia);
-//    }
 
     public Apolice(String numero, Veiculo veiculo, BigDecimal valorPremio, BigDecimal valorFranquia, BigDecimal valorMaximoSegurado, LocalDate dataInicioVigencia) {
         this.numero = numero;
@@ -29,7 +21,6 @@ public class Apolice implements Serializable {
         this.valorFranquia = valorFranquia;
         this.veiculo = veiculo;
         this.dataInicioVigencia = dataInicioVigencia;
-//        this.dataFimVigencia = dataFimVigencia;
     }
 
     public String getNumero() {
@@ -79,12 +70,4 @@ public class Apolice implements Serializable {
     public void setDataInicioVigencia(LocalDate dataInicioVigencia) {
         this.dataInicioVigencia = dataInicioVigencia;
     }
-
-//    public LocalDate getDataFimVigencia() {
-//        return dataFimVigencia;
-//    }
-//
-//    public void setDataFimVigencia(LocalDate dataFimVigencia) {
-//        this.dataFimVigencia = dataFimVigencia;
-//    }
 }

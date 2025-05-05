@@ -36,7 +36,6 @@ public class Segurado implements Serializable {
 		this.endereco = endereco;
 	}
 
-	// Métodos protegidos para dataCriacao
 	protected LocalDate getDataCriacao() {
 		return dataCriacao;
 	}

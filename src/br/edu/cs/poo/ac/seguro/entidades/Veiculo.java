@@ -19,7 +19,6 @@ public class Veiculo implements Serializable {
 		this.categoria = categoria.ordinal();
 	}
 
-	// Construtor padrão exigido para serialização
 	public Veiculo() {
 	}
 

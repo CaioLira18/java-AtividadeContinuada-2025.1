@@ -16,7 +16,6 @@ public class ApoliceDAO {
     }
 
     public Optional<Apolice> findByNumero(String numero) {
-        // Primeiro verifica na lista interna
         Optional<Apolice> apoliceLocal = apolices.stream()
                 .filter(a -> a.getNumero().equalsIgnoreCase(numero))
                 .findFirst();
@@ -25,7 +24,6 @@ public class ApoliceDAO {
             return apoliceLocal;
         }
 
-        // Se não encontrar, verifica no CadastroObjetos
         Apolice apoliceCadastro = (Apolice) cadastro.buscar(numero);
         if (apoliceCadastro != null) {
             apolices.add(apoliceCadastro); // Adiciona na lista interna para cache
@@ -40,17 +38,13 @@ public class ApoliceDAO {
         cadastro.incluir(apolice, apolice.getNumero());
     }
 
-    // Remove a lista interna e mantém apenas o cadastro
     public Optional<Apolice> findByPlaca(String placa) {
-        // Implementação alternativa se necessário
         return Optional.empty();
     }
 
     public void update(String placa, Apolice novaApolice) {
-        // Implementação atualizada se necessário
     }
 
     public void remove(String placa) {
-        // Implementação atualizada se necessário
     }
 }

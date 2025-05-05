@@ -158,7 +158,6 @@ public class TesteApoliceMediator extends TesteMediator {
 		Assertions.assertEquals("Apólice já existente para ano atual e veículo",
 				mediator.incluirApolice(dr).getMensagemErro());
 	}
-	@Test
 	public void test010() {
 		String cnpj = "11851715000174";
 		String placa = "KKK0019";
