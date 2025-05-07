@@ -3,31 +3,22 @@ package br.edu.cs.poo.ac.seguro.entidades;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.Period;
 
-public class SeguradoPessoa implements Serializable {
-	private static final long serialVersionUID = 1L;
-
+public class SeguradoPessoa extends Segurado implements Serializable {
 	private String cpf;
-	private String nome;
-	private BigDecimal bonus;
-	private String endereco;
-	private LocalDate dataNascimento;
-	private BigDecimal renda;
+	private double renda;
 
-	public SeguradoPessoa(String nome, String endereco, LocalDate dataNascimento, BigDecimal renda, String cpf, double bonusInicial) {
+	public SeguradoPessoa(String nome, Endereco endereco, LocalDate dataNascimento,
+						  BigDecimal bonus, String cpf, double renda) {
+		super(nome, endereco, dataNascimento, bonus);
 		this.cpf = cpf;
-		this.nome = nome;
-		this.endereco = endereco;
-		this.dataNascimento = dataNascimento;
 		this.renda = renda;
-		this.bonus = BigDecimal.valueOf(bonusInicial);
 	}
 
 	public SeguradoPessoa(String cpf, String nome) {
+		super(nome, null, LocalDate.now(), BigDecimal.ZERO);
 		this.cpf = cpf;
-		this.nome = nome;
-		this.bonus = BigDecimal.ZERO;
+		this.renda = 0.0;
 	}
 
 	public String getCpf() {
@@ -38,58 +29,19 @@ public class SeguradoPessoa implements Serializable {
 		this.cpf = cpf;
 	}
 
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public BigDecimal getBonus() {
-		return bonus;
-	}
-
-	public void setBonus(BigDecimal bonus) {
-		this.bonus = bonus;
-	}
-
-	public String getEndereco() {
-		return endereco;
-	}
-
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
-	}
-
-	public LocalDate getDataNascimento() {
-		return dataNascimento;
-	}
-
-	public void setDataNascimento(LocalDate dataNascimento) {
-		this.dataNascimento = dataNascimento;
-	}
-
-	public BigDecimal getRenda() {
+	public double getRenda() {
 		return renda;
 	}
 
-	public void setRenda(BigDecimal renda) {
+	public void setRenda(double renda) {
 		this.renda = renda;
 	}
 
-	public int getIdade() {
-		if (dataNascimento == null) {
-			return 0;
-		}
-		return Period.between(dataNascimento, LocalDate.now()).getYears();
+	public LocalDate getDataNascimento() {
+		return super.getDataCriacao();
 	}
 
-	public void debitarBonus(BigDecimal valor) {
-		if (this.bonus.compareTo(valor) >= 0) {
-			this.bonus = this.bonus.subtract(valor);
-		} else {
-			this.bonus = BigDecimal.ZERO;
-		}
+	public void setDataNascimento(LocalDate dataNascimento) {
+		super.setDataCriacao(dataNascimento);
 	}
 }

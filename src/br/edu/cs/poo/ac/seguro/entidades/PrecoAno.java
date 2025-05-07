@@ -1,7 +1,6 @@
 package br.edu.cs.poo.ac.seguro.entidades;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 public class PrecoAno implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -9,9 +8,7 @@ public class PrecoAno implements Serializable {
 	private int ano;
 	private double valorMaximo;
 
-	public PrecoAno() {
-		// Construtor padrão exigido para serialização
-	}
+	public PrecoAno() {}
 
 	public PrecoAno(int ano, double valorMaximo) {
 		this.ano = ano;

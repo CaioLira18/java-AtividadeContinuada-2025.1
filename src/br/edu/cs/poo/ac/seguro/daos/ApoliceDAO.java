@@ -7,40 +7,44 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ApoliceDAO extends DAOGenerico{
-
+public class ApoliceDAO {
     private final List<Apolice> apolices = new ArrayList<>();
+    private final CadastroObjetos cadastro;
 
     public ApoliceDAO() {
-        cadastro = new CadastroObjetos(Apolice.class);
+        this.cadastro = new CadastroObjetos(Apolice.class);
+    }
+
+    public Optional<Apolice> findByNumero(String numero) {
+        Optional<Apolice> apoliceLocal = apolices.stream()
+                .filter(a -> a.getNumero().equalsIgnoreCase(numero))
+                .findFirst();
+
+        if (apoliceLocal.isPresent()) {
+            return apoliceLocal;
+        }
+
+        Apolice apoliceCadastro = (Apolice) cadastro.buscar(numero);
+        if (apoliceCadastro != null) {
+            apolices.add(apoliceCadastro); // Adiciona na lista interna para cache
+            return Optional.of(apoliceCadastro);
+        }
+
+        return Optional.empty();
     }
 
     public void insert(Apolice apolice) {
         apolices.add(apolice);
+        cadastro.incluir(apolice, apolice.getNumero());
     }
 
     public Optional<Apolice> findByPlaca(String placa) {
-        return apolices.stream()
-                .filter(a -> a.getVeiculo().getPlaca().equalsIgnoreCase(placa))
-                .findFirst();
-    }
-
-    public Optional<Apolice> findByNumero(String numero) {
-        return apolices.stream()
-                .filter(a -> a.getVeiculo().getPlaca().equalsIgnoreCase(numero))
-                .findFirst();
+        return Optional.empty();
     }
 
     public void update(String placa, Apolice novaApolice) {
-            findByPlaca(placa).ifPresent(original -> {
-            original.setValorFranquia(novaApolice.getValorFranquia());
-            original.setValorPremio(novaApolice.getValorPremio());
-            original.setValorMaximoSegurado(novaApolice.getValorMaximoSegurado());
-        });
     }
 
     public void remove(String placa) {
-        apolices.removeIf(a -> a.getVeiculo().getPlaca().equalsIgnoreCase(placa));
     }
-
 }
