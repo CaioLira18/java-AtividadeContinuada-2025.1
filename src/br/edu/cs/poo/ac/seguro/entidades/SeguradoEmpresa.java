@@ -55,4 +55,10 @@ public class SeguradoEmpresa extends Segurado {
 	public void setDataAbertura(LocalDate dataAbertura) {
 		setDataCriacao(dataAbertura);
 	}
+
+	@Override
+	public boolean isEmpresa() {
+		return true;
+	}
+
 }

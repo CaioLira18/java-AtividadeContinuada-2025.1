@@ -7,15 +7,13 @@ public class Veiculo implements Serializable {
 
 	private String placa;
 	private int ano;
-	private SeguradoEmpresa proprietarioEmpresa;
-	private SeguradoPessoa proprietarioPessoa;
+	private Segurado proprietario;
 	private int categoria;
 
-	public Veiculo(String placa, int ano, SeguradoEmpresa proprietarioEmpresa, SeguradoPessoa proprietarioPessoa, CategoriaVeiculo categoria) {
+	public Veiculo(String placa, int ano, Segurado proprietario, CategoriaVeiculo categoria) {
 		this.placa = placa;
 		this.ano = ano;
-		this.proprietarioPessoa = proprietarioPessoa;
-		this.proprietarioEmpresa = proprietarioEmpresa;
+		this.proprietario = proprietario;
 		this.categoria = categoria.ordinal();
 	}
 
@@ -46,21 +44,14 @@ public class Veiculo implements Serializable {
 		this.categoria = categoria;
 	}
 
-	public SeguradoPessoa getProprietarioPessoa() {
-		return proprietarioPessoa;
+	public Segurado getProprietario() {
+		return proprietario;
 	}
 
-	public void setProprietarioPessoa(SeguradoPessoa proprietarioPessoa) {
-		this.proprietarioPessoa = proprietarioPessoa;
+	public void setProprietario(Segurado proprietario) {
+		this.proprietario = proprietario;
 	}
 
-	public SeguradoEmpresa getProprietarioEmpresa() {
-		return proprietarioEmpresa;
-	}
-
-	public void setProprietarioEmpresa(SeguradoEmpresa proprietarioEmpresa) {
-		this.proprietarioEmpresa = proprietarioEmpresa;
-	}
 
 	@Override
 	public boolean equals(Object obj) {
