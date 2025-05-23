@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import br.edu.cs.poo.ac.seguro.daos.SeguradoDAO;
 import br.edu.cs.poo.ac.seguro.entidades.CategoriaVeiculo;
 import br.edu.cs.poo.ac.seguro.entidades.Segurado;
 import br.edu.cs.poo.ac.seguro.entidades.SeguradoEmpresa;

@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.io.Serializable;
 
-public class Apolice implements Serializable {
+public class Apolice implements Registro {
     private static final long serialVersionUID = 1L;
 
     private String numero;
@@ -69,5 +69,10 @@ public class Apolice implements Serializable {
 
     public void setDataInicioVigencia(LocalDate dataInicioVigencia) {
         this.dataInicioVigencia = dataInicioVigencia;
+    }
+
+    @Override
+    public String getIdUnico() {
+        return getNumero();
     }
 }

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ApoliceDAO {
+public class ApoliceDAO extends DAOGenerico {
     private final List<Apolice> apolices = new ArrayList<>();
     private final CadastroObjetos cadastro;
 
@@ -46,5 +46,10 @@ public class ApoliceDAO {
     }
 
     public void remove(String placa) {
+    }
+
+    @Override
+    public Class<Apolice> getClasseEntidade() {
+        return Apolice.class;
     }
 }

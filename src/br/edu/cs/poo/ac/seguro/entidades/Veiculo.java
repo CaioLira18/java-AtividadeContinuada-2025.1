@@ -2,7 +2,7 @@ package br.edu.cs.poo.ac.seguro.entidades;
 
 import java.io.Serializable;
 
-public class Veiculo implements Serializable {
+public class Veiculo implements Registro {
 	private static final long serialVersionUID = 1L;
 
 	private String placa;
@@ -52,6 +52,10 @@ public class Veiculo implements Serializable {
 		this.proprietario = proprietario;
 	}
 
+	@Override
+	public String getIdUnico() {
+		return getPlaca();
+	}
 
 	@Override
 	public boolean equals(Object obj) {

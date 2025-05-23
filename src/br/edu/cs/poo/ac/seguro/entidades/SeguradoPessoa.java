@@ -50,4 +50,8 @@ public class SeguradoPessoa extends Segurado implements Serializable {
 		return false;
 	}
 
+	@Override
+	public String getIdUnico() {
+		return getCpf();
+	}
 }

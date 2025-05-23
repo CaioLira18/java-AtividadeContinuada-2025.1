@@ -1,4 +1,7 @@
 package br.edu.cs.poo.ac.seguro.entidades;
 
-public class Registro {
+import java.io.Serializable;
+
+public interface Registro extends Serializable {
+    String getIdUnico();
 }
