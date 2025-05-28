@@ -3,6 +3,9 @@ package br.edu.cs.poo.ac.seguro.daos;
 import br.edu.cs.poo.ac.seguro.entidades.Registro;
 import br.edu.cs.poo.ac.seguro.entidades.Sinistro;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SinistroDAO extends DAOGenerico<Sinistro> {
 
     @Override
@@ -45,8 +48,19 @@ public class SinistroDAO extends DAOGenerico<Sinistro> {
         if (super.buscar(numero) == null) {
             return false;
         } else {
-            super.remover(numero);
+            super.excluir(numero);
             return true;
         }
+    }
+
+    public List<Sinistro> buscarPorNumeroApolice(String numeroApolice) {
+        Sinistro[] todos = buscarTodosSinistros();
+        List<Sinistro> filtrados = new ArrayList<>();
+        for (Sinistro s : todos) {
+            if (s.getNumeroApolice().equalsIgnoreCase(numeroApolice)) {
+                filtrados.add(s);
+            }
+        }
+        return filtrados;
     }
 }

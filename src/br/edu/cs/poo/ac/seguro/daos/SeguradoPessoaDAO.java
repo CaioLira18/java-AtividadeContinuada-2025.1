@@ -17,6 +17,6 @@ public class SeguradoPessoaDAO extends SeguradoDAO {
 	}
 
 	public boolean excluir(String numero) {
-		return super.remover(numero);
+		return super.excluir(numero);
 	}
 }

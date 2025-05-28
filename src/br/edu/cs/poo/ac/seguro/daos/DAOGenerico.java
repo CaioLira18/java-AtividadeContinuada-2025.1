@@ -50,7 +50,7 @@ public abstract class DAOGenerico<T extends Registro> {
 	}
 
 
-	public boolean remover(String id) {
+	public boolean excluir(String id) {
 		if (cadastro.buscar(id) != null) {
 			cadastro.excluir(id);
 			return true;

@@ -22,6 +22,6 @@ public class VeiculoDAO extends DAOGenerico<Veiculo> {
     }
 
     public boolean excluir(String placa) {
-        return super.remover(placa);
+        return super.excluir(placa);
     }
 }

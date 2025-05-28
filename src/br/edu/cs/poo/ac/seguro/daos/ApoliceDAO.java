@@ -2,6 +2,7 @@ package br.edu.cs.poo.ac.seguro.daos;
 
 import br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
 import br.edu.cs.poo.ac.seguro.entidades.Apolice;
+import br.edu.cs.poo.ac.seguro.entidades.Registro;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,17 @@ public class ApoliceDAO extends DAOGenerico {
         return Optional.empty();
     }
 
+    public List<Apolice> buscarTodas() {
+        Registro[] registros = super.buscarTodos();
+        List<Apolice> lista = new ArrayList<>();
+        for (Registro r : registros) {
+            lista.add((Apolice) r);
+        }
+        return lista;
+    }
+
+
+
     public void insert(Apolice apolice) {
         apolices.add(apolice);
         cadastro.incluir(apolice, apolice.getNumero());
@@ -52,4 +64,8 @@ public class ApoliceDAO extends DAOGenerico {
     public Class<Apolice> getClasseEntidade() {
         return Apolice.class;
     }
+
+
+
+
 }

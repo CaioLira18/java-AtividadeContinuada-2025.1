@@ -18,10 +18,10 @@ import br.edu.cs.poo.ac.seguro.entidades.Sinistro;
 import br.edu.cs.poo.ac.seguro.entidades.TipoSinistro;
 import br.edu.cs.poo.ac.seguro.entidades.Veiculo;
 import br.edu.cs.poo.ac.seguro.mediators.ApoliceMediator;
-// import br.edu.cs.poo.ac.seguro.mediators.ApoliceMediatorOco;
+//import br.edu.cs.poo.ac.seguro.mediators.ApoliceMediatorOco;
 import br.edu.cs.poo.ac.seguro.mediators.DadosVeiculo;
 import br.edu.cs.poo.ac.seguro.mediators.RetornoInclusaoApolice;
-// import br.edu.cs.poo.divisao.RetornoDivisao;
+//import br.edu.cs.poo.divisao.RetornoDivisao;
   
 public class TesteApoliceMediator extends TesteMediator {
 	

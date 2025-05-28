@@ -21,9 +21,10 @@ public class Sinistro implements Registro {
     private BigDecimal valorSinistro;
     private TipoSinistro tipo;
 
-    // Novos atributos da 4ª melhoria - não incluir no construtor existente
     private int sequencial;
     private String numeroApolice;
+
+
 
     @Override
     public String getIdUnico() {
