@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@AllArgsConstructor
 public class Sinistro implements Registro {
     private static final long serialVersionUID = 1L;
 
@@ -38,6 +37,16 @@ public class Sinistro implements Registro {
 
     public void setSequencial(int sequencial) {
         this.sequencial = sequencial;
+    }
+
+    public Sinistro(String numero, Veiculo veiculo, LocalDateTime dataHoraSinistro, LocalDateTime dataHoraRegistro, String usuarioRegistro, BigDecimal valorSinistro, TipoSinistro tipo) {
+        this.numero = numero;
+        this.veiculo = veiculo;
+        this.dataHoraSinistro = dataHoraSinistro;
+        this.dataHoraRegistro = dataHoraRegistro;
+        this.usuarioRegistro = usuarioRegistro;
+        this.valorSinistro = valorSinistro;
+        this.tipo = tipo;
     }
 
     public String getNumeroApolice() {

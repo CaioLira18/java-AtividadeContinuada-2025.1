@@ -103,14 +103,14 @@ public class TesteDAOGenerico extends TesteMediator {
 	@Test
 	public void test06() {
 		String codigo = "123";				
-		Assertions.assertFalse(dao.excluir(codigo));		
+		Assertions.assertFalse(dao.remover(codigo));
 	}
 	@Test
 	public void test07() {
 		String codigo = "123";
 		RegistroImpl reg = new RegistroImpl(codigo, "EDT");
 		cadastro.incluir(reg, codigo);
-		Assertions.assertTrue(dao.excluir(codigo));
+		Assertions.assertTrue(dao.remover(codigo));
 		RegistroImpl reg2 = (RegistroImpl)cadastro.buscar(codigo);
 		Assertions.assertNull(reg2);
 	}		
