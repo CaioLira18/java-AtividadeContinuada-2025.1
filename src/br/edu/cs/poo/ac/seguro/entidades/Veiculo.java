@@ -14,6 +14,11 @@ public class Veiculo implements Registro {
 		this.placa = placa;
 		this.ano = ano;
 		this.proprietario = proprietario;
+
+		if (categoria == null) {
+			categoria = CategoriaVeiculo.BASICO;
+		}
+
 		this.categoria = categoria.ordinal();
 	}
 

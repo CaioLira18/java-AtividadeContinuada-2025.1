@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.time.LocalDate;
+import java.util.Objects;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -164,6 +165,21 @@ public class TesteDAOGenerico extends TesteMediator {
 			this.codigo = codigo;
 			this.nome = nome; 
 		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) return true;
+			if (!(obj instanceof RegistroImpl)) return false;
+			RegistroImpl other = (RegistroImpl) obj;
+			return Objects.equals(this.codigo, other.codigo) &&
+					Objects.equals(this.nome, other.nome);
+		}
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(codigo, nome);
+		}
+
 		public String getIdUnico() {
 			return codigo;
 		}		

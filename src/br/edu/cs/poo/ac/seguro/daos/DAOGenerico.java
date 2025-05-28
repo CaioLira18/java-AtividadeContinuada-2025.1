@@ -42,8 +42,13 @@ public abstract class DAOGenerico<T extends Registro> {
 
 	public Registro[] buscarTodos() {
 		Serializable[] valores = cadastro.buscarTodos();
-		return (Registro[]) valores;
+		Registro[] registros = new Registro[valores.length];
+		for (int i = 0; i < valores.length; i++) {
+			registros[i] = (Registro) valores[i];
+		}
+		return registros;
 	}
+
 
 	public boolean remover(String id) {
 		if (cadastro.buscar(id) != null) {
