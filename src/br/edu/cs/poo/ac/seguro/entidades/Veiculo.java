@@ -2,20 +2,23 @@ package br.edu.cs.poo.ac.seguro.entidades;
 
 import java.io.Serializable;
 
-public class Veiculo implements Serializable {
+public class Veiculo implements Registro {
 	private static final long serialVersionUID = 1L;
 
 	private String placa;
 	private int ano;
-	private SeguradoEmpresa proprietarioEmpresa;
-	private SeguradoPessoa proprietarioPessoa;
+	private Segurado proprietario;
 	private int categoria;
 
-	public Veiculo(String placa, int ano, SeguradoEmpresa proprietarioEmpresa, SeguradoPessoa proprietarioPessoa, CategoriaVeiculo categoria) {
+	public Veiculo(String placa, int ano, Segurado proprietario, CategoriaVeiculo categoria) {
 		this.placa = placa;
 		this.ano = ano;
-		this.proprietarioPessoa = proprietarioPessoa;
-		this.proprietarioEmpresa = proprietarioEmpresa;
+		this.proprietario = proprietario;
+
+		if (categoria == null) {
+			categoria = CategoriaVeiculo.BASICO;
+		}
+
 		this.categoria = categoria.ordinal();
 	}
 
@@ -46,20 +49,17 @@ public class Veiculo implements Serializable {
 		this.categoria = categoria;
 	}
 
-	public SeguradoPessoa getProprietarioPessoa() {
-		return proprietarioPessoa;
+	public Segurado getProprietario() {
+		return proprietario;
 	}
 
-	public void setProprietarioPessoa(SeguradoPessoa proprietarioPessoa) {
-		this.proprietarioPessoa = proprietarioPessoa;
+	public void setProprietario(Segurado proprietario) {
+		this.proprietario = proprietario;
 	}
 
-	public SeguradoEmpresa getProprietarioEmpresa() {
-		return proprietarioEmpresa;
-	}
-
-	public void setProprietarioEmpresa(SeguradoEmpresa proprietarioEmpresa) {
-		this.proprietarioEmpresa = proprietarioEmpresa;
+	@Override
+	public String getIdUnico() {
+		return getPlaca();
 	}
 
 	@Override

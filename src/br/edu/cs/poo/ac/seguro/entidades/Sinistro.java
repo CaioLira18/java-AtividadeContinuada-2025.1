@@ -10,8 +10,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@AllArgsConstructor
-public class Sinistro implements Serializable {
+public class Sinistro implements Registro {
     private static final long serialVersionUID = 1L;
 
     private String numero;
@@ -21,4 +20,41 @@ public class Sinistro implements Serializable {
     private String usuarioRegistro;
     private BigDecimal valorSinistro;
     private TipoSinistro tipo;
+
+    private int sequencial;
+    private String numeroApolice;
+
+
+
+    @Override
+    public String getIdUnico() {
+        return getNumero();
+    }
+
+    // Métodos get/set para os novos atributos
+    public int getSequencial() {
+        return sequencial;
+    }
+
+    public void setSequencial(int sequencial) {
+        this.sequencial = sequencial;
+    }
+
+    public Sinistro(String numero, Veiculo veiculo, LocalDateTime dataHoraSinistro, LocalDateTime dataHoraRegistro, String usuarioRegistro, BigDecimal valorSinistro, TipoSinistro tipo) {
+        this.numero = numero;
+        this.veiculo = veiculo;
+        this.dataHoraSinistro = dataHoraSinistro;
+        this.dataHoraRegistro = dataHoraRegistro;
+        this.usuarioRegistro = usuarioRegistro;
+        this.valorSinistro = valorSinistro;
+        this.tipo = tipo;
+    }
+
+    public String getNumeroApolice() {
+        return numeroApolice;
+    }
+
+    public void setNumeroApolice(String numeroApolice) {
+        this.numeroApolice = numeroApolice;
+    }
 }

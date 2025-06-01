@@ -119,10 +119,11 @@ public class ApoliceMediator {
 
 		boolean isCpf = cpfOuCnpj.length() == 11;
 
-		SeguradoPessoa segPes = isCpf ? daoSegPes.buscar(cpfOuCnpj) : null;
-		SeguradoEmpresa segEmp = !isCpf ? daoSegEmp.buscar(cpfOuCnpj) : null;
+		Segurado segurado = isCpf
+				? daoSegPes.buscar(cpfOuCnpj)
+				: daoSegEmp.buscar(cpfOuCnpj);
 
-		if ((isCpf && segPes == null) || (!isCpf && segEmp == null)) {
+		if (segurado == null) {
 			return new RetornoInclusaoApolice(null, isCpf
 					? "CPF inexistente no cadastro de pessoas"
 					: "CNPJ inexistente no cadastro de empresas");
@@ -140,29 +141,25 @@ public class ApoliceMediator {
 
 		Veiculo veiculo = daoVel.buscar(dados.getPlaca());
 		if (veiculo == null) {
-			veiculo = new Veiculo(dados.getPlaca(), dados.getAno(), segEmp, segPes, categoria);
+			veiculo = new Veiculo(dados.getPlaca(), dados.getAno(), segurado, categoria);
 			daoVel.incluir(veiculo);
 		} else {
-			if (isCpf) {
-				veiculo.setProprietarioPessoa(segPes);
-				veiculo.setProprietarioEmpresa(null);
-			} else {
-				veiculo.setProprietarioEmpresa(segEmp);
-				veiculo.setProprietarioPessoa(null);
-			}
+			veiculo.setProprietario(segurado);
 			daoVel.alterar(veiculo);
 		}
+
+
 
 		BigDecimal vpa = dados.getValorMaximoSegurado().multiply(new BigDecimal("0.03"))
 				.setScale(2, RoundingMode.HALF_UP);
 
 		BigDecimal vpb = vpa;
-		if (segEmp != null && segEmp.getEhLocadoraDeVeiculos()) {
+		if (segurado.isEmpresa() && ((SeguradoEmpresa) segurado).getEhLocadoraDeVeiculos()) {
 			vpb = vpa.multiply(new BigDecimal("1.2"))
 					.setScale(2, RoundingMode.HALF_UP);
 		}
 
-		BigDecimal bonus = isCpf ? segPes.getBonus() : segEmp.getBonus();
+		BigDecimal bonus = isCpf ? segurado.getBonus() : segurado.getBonus();
 		BigDecimal vpc = vpb.subtract(bonus.divide(BigDecimal.TEN, 2, RoundingMode.HALF_UP));
 
 		BigDecimal premio = vpc.compareTo(BigDecimal.ZERO) > 0 ? vpc : BigDecimal.ZERO;
@@ -192,14 +189,14 @@ public class ApoliceMediator {
 		if (!teveSinistro) {
 			BigDecimal credito = premio.multiply(new BigDecimal("0.3"))
 					.setScale(2, RoundingMode.HALF_UP);
-			if (isCpf) {
-				segPes.setBonus(segPes.getBonus().add(credito));
-				daoSegPes.alterar(segPes);
+			segurado.setBonus(segurado.getBonus().add(credito));
+			if (segurado.isEmpresa()) {
+				daoSegEmp.alterar((SeguradoEmpresa) segurado);
 			} else {
-				segEmp.setBonus(segEmp.getBonus().add(credito));
-				daoSegEmp.alterar(segEmp);
+				daoSegPes.alterar((SeguradoPessoa) segurado);
 			}
 		}
+
 
 		return new RetornoInclusaoApolice(numero, null);
 	}

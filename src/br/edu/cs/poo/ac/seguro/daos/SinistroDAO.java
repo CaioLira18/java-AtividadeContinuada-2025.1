@@ -1,51 +1,66 @@
 package br.edu.cs.poo.ac.seguro.daos;
 
-import br.edu.cesarschool.next.oo.persistenciaobjetos.CadastroObjetos;
+import br.edu.cs.poo.ac.seguro.entidades.Registro;
 import br.edu.cs.poo.ac.seguro.entidades.Sinistro;
 
-public class SinistroDAO extends DAOGenerico {
+import java.util.ArrayList;
+import java.util.List;
 
-    public SinistroDAO() {
-        cadastro = new CadastroObjetos(Sinistro.class);
+public class SinistroDAO extends DAOGenerico<Sinistro> {
+
+    @Override
+    public Class<Sinistro> getClasseEntidade() {
+        return Sinistro.class;
     }
 
-    public Sinistro[] buscarTodos() {
-        Object[] objs = cadastro.buscarTodos();
-        Sinistro[] sinistros = new Sinistro[objs.length];
-        for (int i = 0; i < objs.length; i++) {
-            sinistros[i] = (Sinistro) objs[i];
+    public Sinistro[] buscarTodosSinistros() {
+        Registro[] registros = super.buscarTodos();
+        Sinistro[] sinistros = new Sinistro[registros.length];
+        for (int i = 0; i < registros.length; i++) {
+            sinistros[i] = (Sinistro) registros[i];
         }
         return sinistros;
     }
 
-    public Sinistro buscar(String numero) {
-        return (Sinistro) cadastro.buscar(numero);
+    public Sinistro[] buscarTodos() {
+        return buscarTodosSinistros();
     }
 
-    public boolean incluir(Sinistro sinistro) {
-        if (buscar(sinistro.getNumero()) != null) {
+    public boolean incluirSinistro(Sinistro sinistro) {
+        if (super.buscar(sinistro.getNumero()) != null) {
             return false;
         } else {
-            cadastro.incluir(sinistro, sinistro.getNumero());
+            super.incluir(sinistro);
             return true;
         }
     }
 
-    public boolean alterar(Sinistro sinistro) {
-        if (buscar(sinistro.getNumero()) == null) {
+    public boolean alterarSinistro(Sinistro sinistro) {
+        if (super.buscar(sinistro.getNumero()) == null) {
             return false;
         } else {
-            cadastro.alterar(sinistro, sinistro.getNumero());
+            super.alterar(sinistro);
             return true;
         }
     }
 
-    public boolean excluir(String numero) {
-        if (buscar(numero) == null) {
+    public boolean excluirSinistro(String numero) {
+        if (super.buscar(numero) == null) {
             return false;
         } else {
-            cadastro.excluir(numero);
+            super.excluir(numero);
             return true;
         }
+    }
+
+    public List<Sinistro> buscarPorNumeroApolice(String numeroApolice) {
+        Sinistro[] todos = buscarTodosSinistros();
+        List<Sinistro> filtrados = new ArrayList<>();
+        for (Sinistro s : todos) {
+            if (s.getNumeroApolice().equalsIgnoreCase(numeroApolice)) {
+                filtrados.add(s);
+            }
+        }
+        return filtrados;
     }
 }

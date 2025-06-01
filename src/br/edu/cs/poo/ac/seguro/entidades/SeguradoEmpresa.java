@@ -8,7 +8,6 @@ public class SeguradoEmpresa extends Segurado {
 	private double faturamento;
 	private boolean ehLocadoraDeVeiculos;
 
-
 	public SeguradoEmpresa(
 			String nome,
 			Endereco endereco,
@@ -23,36 +22,45 @@ public class SeguradoEmpresa extends Segurado {
 		this.ehLocadoraDeVeiculos = ehLocadoraDeVeiculos;
 	}
 
-
 	public String getCnpj() {
 		return cnpj;
 	}
-	
+
 	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
 	}
-	
+
 	public double getFaturamento() {
 		return faturamento;
 	}
-	
+
 	public void setFaturamento(double faturamento) {
 		this.faturamento = faturamento;
 	}
-	
+
 	public boolean getEhLocadoraDeVeiculos() {
 		return ehLocadoraDeVeiculos;
 	}
-	
+
 	public void setEhLocadoraDeVeiculos(boolean ehLocadoraDeVeiculos) {
 		this.ehLocadoraDeVeiculos = ehLocadoraDeVeiculos;
 	}
-	
+
 	public LocalDate getDataAbertura() {
 		return getDataCriacao();
 	}
-	
+
 	public void setDataAbertura(LocalDate dataAbertura) {
 		setDataCriacao(dataAbertura);
+	}
+
+	@Override
+	public boolean isEmpresa() {
+		return true;
+	}
+
+	@Override
+	public String getIdUnico() {
+		return getCnpj();
 	}
 }
