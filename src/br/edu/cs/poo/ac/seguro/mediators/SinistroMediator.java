@@ -48,22 +48,22 @@ public class SinistroMediator {
 		}
 
 		if (dados.getPlaca() == null || dados.getPlaca().trim().isEmpty()) {
-			excecao.adicionarMensagem("Placa do Veículo deve ser informada");
+			excecao.adicionarMensagem("Placa do Veiculo deve ser informada");
 		} else if (daoVeiculo.buscar(dados.getPlaca()) == null) {
-			excecao.adicionarMensagem("Veículo não cadastrado");
+			excecao.adicionarMensagem("Veiculo nao cadastrado");
 		}
 
 		if (dados.getUsuarioRegistro() == null || dados.getUsuarioRegistro().trim().isEmpty()) {
-			excecao.adicionarMensagem("Usuário de registro não pode ser nulo ou vazio.");
+			excecao.adicionarMensagem("Usuario do registro de sinistro deve ser informado");
 		}
 
 		if (dados.getValorSinistro() <= 0) {
-			excecao.adicionarMensagem("Valor do sinistro deve ser maior que zero.");
+			excecao.adicionarMensagem("Valor do sinistro deve ser maior que zero");
 		}
 
 		TipoSinistro tipoSinistro = TipoSinistro.getTipoSinistro(dados.getCodigoTipoSinistro());
 		if (tipoSinistro == null) {
-			excecao.adicionarMensagem("Código do tipo de sinistro inválido.");
+			excecao.adicionarMensagem("Codigo do tipo de sinistro invalido");
 		}
 
 		if (excecao.possuiErros()) throw excecao;
@@ -85,7 +85,6 @@ public class SinistroMediator {
 			boolean dentroVigencia = !ap.getDataInicioVigencia().isAfter(dataSinistro) &&
 					ap.getDataInicioVigencia().plusYears(1).isAfter(dataSinistro);
 
-
 			if (placaIgual && dentroVigencia) {
 				apoliceCobrindo = ap;
 				break;
@@ -93,16 +92,15 @@ public class SinistroMediator {
 		}
 
 		if (apoliceCobrindo == null) {
-			excecao.adicionarMensagem("Não existe apólice vigente para o veículo");
+			excecao.adicionarMensagem("Nao existe apolice vigente para o veiculo");
 			throw excecao;
 		}
 
 		BigDecimal valorSinistro = BigDecimal.valueOf(dados.getValorSinistro());
 		if (valorSinistro.compareTo(apoliceCobrindo.getValorMaximoSegurado()) > 0) {
-			excecao.adicionarMensagem("Valor do sinistro não pode ultrapassar o valor máximo segurado constante na apólice");
+			excecao.adicionarMensagem("Valor do sinistro nao pode ultrapassar o valor maximo segurado constante na apolice");
 			throw excecao;
 		}
-
 
 		List<Sinistro> sinistros = daoSinistro.buscarPorNumeroApolice(apoliceCobrindo.getNumero());
 		int sequencial = 1;
@@ -113,11 +111,15 @@ public class SinistroMediator {
 
 		String numeroSinistro = "S" + apoliceCobrindo.getNumero() + String.format("%03d", sequencial);
 
+		// 🔧 Normalização dos LocalDateTime (sem nanos)
+		LocalDateTime dataRegistro = dataHoraAtual.withNano(0);
+		LocalDateTime dataOcorrencia = dados.getDataHoraSinistro().withNano(0);
+
 		Sinistro sinistro = new Sinistro(
 				numeroSinistro,
 				veiculo,
-				dados.getDataHoraSinistro(),
-				dataHoraAtual,
+				dataOcorrencia,
+				dataRegistro,
 				dados.getUsuarioRegistro(),
 				BigDecimal.valueOf(dados.getValorSinistro()),
 				tipoSinistro
@@ -127,6 +129,6 @@ public class SinistroMediator {
 
 		daoSinistro.incluirSinistro(sinistro);
 		return numeroSinistro;
-
 	}
+
 }
