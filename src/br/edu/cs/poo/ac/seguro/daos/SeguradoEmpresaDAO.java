@@ -4,6 +4,11 @@ import br.edu.cs.poo.ac.seguro.entidades.SeguradoEmpresa;
 
 public class SeguradoEmpresaDAO extends SeguradoDAO {
 
+    @Override
+    public Class getClasseEntidade() {
+        return SeguradoEmpresa.class;
+    }
+
     public SeguradoEmpresa buscar(String numero) {
         return (SeguradoEmpresa) super.buscar(numero);
     }
