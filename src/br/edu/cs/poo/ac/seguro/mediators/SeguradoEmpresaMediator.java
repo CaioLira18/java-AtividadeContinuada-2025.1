@@ -7,7 +7,6 @@ public class SeguradoEmpresaMediator {
 
 	private SeguradoEmpresaDAO dao = new SeguradoEmpresaDAO();
 	private static SeguradoEmpresaMediator instancia = new SeguradoEmpresaMediator();
-
 	private SeguradoEmpresaMediator() {}
 
 	public static SeguradoEmpresaMediator getInstancia() {
