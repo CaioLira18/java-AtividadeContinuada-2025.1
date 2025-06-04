@@ -157,7 +157,7 @@ public class TesteDAOGenerico extends TesteMediator {
 			Assertions.fail();
 		}
 	}
-	static class RegistroImpl implements Registro {
+	static class RegistroImpl implements Registro, Serializable {
 		String codigo;
 		String nome;
 		public RegistroImpl(String codigo, String nome) {
