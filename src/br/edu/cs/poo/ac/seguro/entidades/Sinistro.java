@@ -43,12 +43,13 @@ public class Sinistro implements Registro {
     public Sinistro(String numero, Veiculo veiculo, LocalDateTime dataHoraSinistro, LocalDateTime dataHoraRegistro, String usuarioRegistro, BigDecimal valorSinistro, TipoSinistro tipo) {
         this.numero = numero;
         this.veiculo = veiculo;
-        this.dataHoraSinistro = dataHoraSinistro;
-        this.dataHoraRegistro = dataHoraRegistro;
+        this.dataHoraSinistro = dataHoraSinistro.withNano(0); 
+        this.dataHoraRegistro = dataHoraRegistro.withNano(0);
         this.usuarioRegistro = usuarioRegistro;
-        this.valorSinistro = valorSinistro;
+        this.valorSinistro = valorSinistro.setScale(2);
         this.tipo = tipo;
     }
+
 
     public String getNumeroApolice() {
         return numeroApolice;
