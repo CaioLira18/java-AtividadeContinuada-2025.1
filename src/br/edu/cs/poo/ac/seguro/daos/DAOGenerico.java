@@ -19,7 +19,8 @@ public abstract class DAOGenerico<T extends Registro> {
 			if (cadastro.buscar(entidade.getIdUnico()) != null) {
 				return false;
 			}
-			cadastro.incluir(entidade.getIdUnico(), String.valueOf(entidade));
+			// CORREÇÃO: passar objeto como primeiro parâmetro, chave como segundo
+			cadastro.incluir(entidade, entidade.getIdUnico());
 			return true;
 		}
 		return false;
@@ -30,7 +31,8 @@ public abstract class DAOGenerico<T extends Registro> {
 			if (cadastro.buscar(entidade.getIdUnico()) == null) {
 				return false;
 			}
-			cadastro.incluir(entidade.getIdUnico(), String.valueOf(entidade));
+			// CORREÇÃO: passar objeto como primeiro parâmetro, chave como segundo
+			cadastro.alterar(entidade, entidade.getIdUnico());
 			return true;
 		}
 		return false;
@@ -48,7 +50,6 @@ public abstract class DAOGenerico<T extends Registro> {
 		}
 		return registros;
 	}
-
 
 	public boolean excluir(String id) {
 		if (cadastro.buscar(id) != null) {
