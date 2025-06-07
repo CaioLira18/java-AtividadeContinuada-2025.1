@@ -226,7 +226,6 @@ public class TelaApolice extends JFrame {
             throw new IllegalArgumentException("Ano deve ser um número válido");
         }
 
-        // Conversão cuidadosa de String para BigDecimal
         BigDecimal valorMaximoSegurado = null;
         try {
             String valorStr = txtValorMaximoSegurado.getText().replace(",", ".");
@@ -237,7 +236,23 @@ public class TelaApolice extends JFrame {
             throw new IllegalArgumentException("Valor máximo segurado deve ser um número válido");
         }
 
-        int codigoCategoria = cmbCategoria.getSelectedIndex() + 1;
+        // --- ALTERAÇÃO AQUI: Garante que o código enviado é ordinal + 1 ---
+        String nomeCategoriaSelecionada = (String) cmbCategoria.getSelectedItem();
+        int codigoCategoria = -1; // Valor padrão para indicar que não foi encontrada
+
+        for (CategoriaVeiculo cat : CategoriaVeiculo.values()) {
+            if (cat.name().equalsIgnoreCase(nomeCategoriaSelecionada)) {
+                // O ApoliceMediator espera um valor que, ao subtrair 1, resulte no ordinal.
+                // Então, enviamos o ordinal + 1.
+                codigoCategoria = cat.ordinal() + 1;
+                break;
+            }
+        }
+
+        if (codigoCategoria == -1) {
+            throw new IllegalArgumentException("Categoria de veículo selecionada é inválida.");
+        }
+        // --- FIM DA ALTERAÇÃO ---
 
         return new DadosVeiculo(cpfOuCnpj, placa, ano, valorMaximoSegurado, codigoCategoria);
     }
@@ -245,6 +260,7 @@ public class TelaApolice extends JFrame {
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
             try {
+                // Importante: Manter esta linha aqui para ter o look and feel nativo
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                 TelaApolice frame = new TelaApolice();
                 frame.setVisible(true);
