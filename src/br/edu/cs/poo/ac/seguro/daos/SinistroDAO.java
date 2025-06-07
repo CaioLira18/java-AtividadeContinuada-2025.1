@@ -57,10 +57,11 @@ public class SinistroDAO extends DAOGenerico<Sinistro> {
         Sinistro[] todos = buscarTodosSinistros();
         List<Sinistro> filtrados = new ArrayList<>();
         for (Sinistro s : todos) {
-            if (s.getNumeroApolice().equalsIgnoreCase(numeroApolice)) {
+            if (s.getNumeroApolice() != null && s.getNumeroApolice().equalsIgnoreCase(numeroApolice)) {
                 filtrados.add(s);
             }
         }
         return filtrados;
     }
+
 }

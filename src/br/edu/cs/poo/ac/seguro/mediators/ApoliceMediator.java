@@ -99,11 +99,19 @@ public class ApoliceMediator {
 		CategoriaVeiculo categoria = CategoriaVeiculo.values()[dados.getCodigoCategoria() - 1];
 		double valorReferencia = 0.0;
 
+		// Busca o valor de referência para o ano
 		for (PrecoAno precoAno : categoria.getPrecosAnos()) {
 			if (precoAno.getAno() == dados.getAno()) {
 				valorReferencia = precoAno.getValorMaximo();
 				break;
 			}
+		}
+
+		// Verifica se foi encontrado um valor de referência
+		if (valorReferencia <= 0.0) {
+			return new RetornoInclusaoApolice(null,
+					"Não foi encontrado valor de referência para a categoria " + categoria.name() +
+							" no ano " + dados.getAno());
 		}
 
 		BigDecimal valorMinimo = new BigDecimal(valorReferencia * 0.75).setScale(2, RoundingMode.HALF_UP);
@@ -148,8 +156,7 @@ public class ApoliceMediator {
 			daoVel.alterar(veiculo);
 		}
 
-
-
+		// Cálculo do prêmio
 		BigDecimal vpa = dados.getValorMaximoSegurado().multiply(new BigDecimal("0.03"))
 				.setScale(2, RoundingMode.HALF_UP);
 
@@ -159,7 +166,7 @@ public class ApoliceMediator {
 					.setScale(2, RoundingMode.HALF_UP);
 		}
 
-		BigDecimal bonus = isCpf ? segurado.getBonus() : segurado.getBonus();
+		BigDecimal bonus = segurado.getBonus();
 		BigDecimal vpc = vpb.subtract(bonus.divide(BigDecimal.TEN, 2, RoundingMode.HALF_UP));
 
 		BigDecimal premio = vpc.compareTo(BigDecimal.ZERO) > 0 ? vpc : BigDecimal.ZERO;
@@ -169,6 +176,7 @@ public class ApoliceMediator {
 				.setScale(2, RoundingMode.HALF_UP);
 
 		LocalDate dataInicio = LocalDate.now();
+
 		Apolice apolice = new Apolice(
 				numero,
 				veiculo,
@@ -178,8 +186,10 @@ public class ApoliceMediator {
 				dataInicio
 		);
 
+
 		daoApo.insert(apolice);
 
+		// Verifica se teve sinistro no ano anterior para atualizar bônus
 		int anoAnterior = dataInicio.minusYears(1).getYear();
 		final Veiculo veiculoFinal = veiculo;
 		boolean teveSinistro = Arrays.stream(daoSin.buscarTodos())
@@ -196,7 +206,6 @@ public class ApoliceMediator {
 				daoSegPes.alterar((SeguradoPessoa) segurado);
 			}
 		}
-
 
 		return new RetornoInclusaoApolice(numero, null);
 	}
@@ -220,11 +229,10 @@ public class ApoliceMediator {
 
 		Apolice apolice = apoliceOpt.get();
 		int anoVigencia = apolice.getDataInicioVigencia().getYear();
-		System.out.println("Ano da apólice: " + anoVigencia);
 
 		boolean temSinistro = Arrays.stream(daoSin.buscarTodos())
 				.anyMatch(s -> {
-					int anoSinistro = s.getDataHoraSinistro().getYear(); // <-- alterado aqui
+					int anoSinistro = s.getDataHoraSinistro().getYear();
 					return anoSinistro == anoVigencia && s.getVeiculo().equals(apolice.getVeiculo());
 				});
 

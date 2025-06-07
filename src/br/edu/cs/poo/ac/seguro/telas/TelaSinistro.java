@@ -38,17 +38,24 @@ public class TelaSinistro extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
-        // Campo Placa
         JLabel lblPlaca = new JLabel("Placa:");
         lblPlaca.setBounds(20, 20, 80, 20);
         contentPane.add(lblPlaca);
 
-        txtPlaca = new JTextField();
-        txtPlaca.setBounds(120, 20, 150, 25);
-        contentPane.add(txtPlaca);
+        try {
+            MaskFormatter maskPlaca = new MaskFormatter("UUU-####");
+            maskPlaca.setPlaceholderCharacter('_');
+            JFormattedTextField txtPlacaFormatted = new JFormattedTextField(maskPlaca);
+            txtPlacaFormatted.setBounds(120, 20, 150, 25);
+            contentPane.add(txtPlacaFormatted);
+            txtPlaca = txtPlacaFormatted;
+        } catch (ParseException e) {
+            txtPlaca = new JTextField();
+            txtPlaca.setBounds(120, 20, 150, 25);
+            contentPane.add(txtPlaca);
+        }
         txtPlaca.setColumns(10);
 
-        // Campo Data/Hora do Sinistro
         JLabel lblDataHora = new JLabel("Data/Hora:");
         lblDataHora.setBounds(20, 60, 80, 20);
         contentPane.add(lblDataHora);
@@ -63,7 +70,6 @@ public class TelaSinistro extends JFrame {
         txtDataHoraSinistro.setBounds(120, 60, 150, 25);
         contentPane.add(txtDataHoraSinistro);
 
-        // Campo Usuário de Registro
         JLabel lblUsuario = new JLabel("Usuário:");
         lblUsuario.setBounds(20, 100, 80, 20);
         contentPane.add(lblUsuario);
@@ -73,7 +79,6 @@ public class TelaSinistro extends JFrame {
         contentPane.add(txtUsuarioRegistro);
         txtUsuarioRegistro.setColumns(10);
 
-        // Campo Valor do Sinistro
         JLabel lblValor = new JLabel("Valor:");
         lblValor.setBounds(20, 140, 80, 20);
         contentPane.add(lblValor);
@@ -83,7 +88,6 @@ public class TelaSinistro extends JFrame {
         contentPane.add(txtValorSinistro);
         txtValorSinistro.setColumns(10);
 
-        // ComboBox Tipo de Sinistro
         JLabel lblTipo = new JLabel("Tipo:");
         lblTipo.setBounds(20, 180, 80, 20);
         contentPane.add(lblTipo);
@@ -93,7 +97,6 @@ public class TelaSinistro extends JFrame {
         preencherComboTipoSinistro();
         contentPane.add(cmbTipoSinistro);
 
-        // Botões
         btnIncluir = new JButton("Incluir");
         btnIncluir.setBounds(120, 220, 80, 30);
         contentPane.add(btnIncluir);
@@ -102,25 +105,20 @@ public class TelaSinistro extends JFrame {
         btnLimpar.setBounds(220, 220, 80, 30);
         contentPane.add(btnLimpar);
 
-        // Configurar ações
         configurarAcoes();
 
-        // Configurar ordem de navegação por tab
         configurarOrdemTab();
     }
 
     private void preencherComboTipoSinistro() {
-        // Adiciona os tipos de sinistro em ordem alfabética
         TipoSinistro[] tipos = TipoSinistro.values();
 
-        // Ordena alfabeticamente pelo nome do enum
         java.util.Arrays.sort(tipos, (t1, t2) -> t1.name().compareTo(t2.name()));
 
         for (TipoSinistro tipo : tipos) {
             cmbTipoSinistro.addItem(tipo);
         }
 
-        // Seleciona o primeiro item
         if (cmbTipoSinistro.getItemCount() > 0) {
             cmbTipoSinistro.setSelectedIndex(0);
         }
@@ -132,7 +130,6 @@ public class TelaSinistro extends JFrame {
     }
 
     private void configurarOrdemTab() {
-        // Define a ordem de navegação por Tab
         java.util.Vector<Component> order = new java.util.Vector<>();
         order.add(txtPlaca);
         order.add(txtDataHoraSinistro);
@@ -195,13 +192,22 @@ public class TelaSinistro extends JFrame {
     }
 
     private DadosSinistro montarDadosSinistro() throws Exception {
-        String placa = txtPlaca.getText().trim();
+        String placaRaw = txtPlaca.getText().trim();
+        String placa = placaRaw.replaceAll("[^A-Za-z0-9]", "").toUpperCase();
+
+        if (placa.length() != 7) {
+            throw new Exception("Placa deve ter 7 caracteres (formato ABC1234)");
+        }
+
+        if (placa.length() == 7) {
+            placa = placa.substring(0, 3) + "-" + placa.substring(3);
+        }
+
         String dataHoraStr = txtDataHoraSinistro.getText().trim();
         String usuario = txtUsuarioRegistro.getText().trim();
         String valorStr = txtValorSinistro.getText().trim().replace(",", ".");
         TipoSinistro tipoSelecionado = (TipoSinistro) cmbTipoSinistro.getSelectedItem();
 
-        // Conversão da data/hora
         LocalDateTime dataHoraSinistro = null;
         if (!dataHoraStr.isEmpty() && !dataHoraStr.contains("_")) {
             try {
@@ -212,7 +218,6 @@ public class TelaSinistro extends JFrame {
             }
         }
 
-        // Conversão do valor
         double valor = 0.0;
         if (!valorStr.isEmpty()) {
             try {
@@ -222,7 +227,6 @@ public class TelaSinistro extends JFrame {
             }
         }
 
-        // Código do tipo de sinistro
         int codigoTipo = tipoSelecionado != null ? tipoSelecionado.getCodigo() : 0;
 
         return new DadosSinistro(placa, dataHoraSinistro, usuario, valor, codigoTipo);
@@ -234,12 +238,10 @@ public class TelaSinistro extends JFrame {
         txtUsuarioRegistro.setText("");
         txtValorSinistro.setText("");
 
-        // Limpar combo significa mostrar o primeiro elemento
         if (cmbTipoSinistro.getItemCount() > 0) {
             cmbTipoSinistro.setSelectedIndex(0);
         }
 
-        // Foco no primeiro campo
         txtPlaca.requestFocus();
     }
 

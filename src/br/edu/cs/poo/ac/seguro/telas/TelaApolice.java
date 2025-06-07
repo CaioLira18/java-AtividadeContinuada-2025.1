@@ -110,14 +110,12 @@ public class TelaApolice extends JFrame {
         btnSair.setBounds(300, 220, 80, 30);
         contentPane.add(btnSair);
 
-        // Configurar ações dos botões
         configurarAcoes();
 
-        // Configurar ordem de navegação por tab
         configurarOrdemTab();
 
-        // Aplicar máscaras se disponível
         aplicarMascaras();
+
     }
 
     private void configurarAcoes() {
@@ -127,7 +125,6 @@ public class TelaApolice extends JFrame {
     }
 
     private void configurarOrdemTab() {
-        // Define a ordem de navegação com Tab
         Component[] ordem = {
                 txtCpfCnpj, txtPlaca, txtAno, cmbCategoria,
                 txtValorMaximoSegurado, btnIncluir, btnLimpar, btnSair
@@ -149,7 +146,6 @@ public class TelaApolice extends JFrame {
 
     private void aplicarMascaras() {
         try {
-            // Máscara para ano (4 dígitos)
             MaskFormatter maskAno = new MaskFormatter("####");
             maskAno.setPlaceholderCharacter('_');
             JFormattedTextField txtAnoFormatted = new JFormattedTextField(maskAno);
@@ -158,7 +154,6 @@ public class TelaApolice extends JFrame {
             contentPane.add(txtAnoFormatted);
             txtAno = txtAnoFormatted;
 
-            // Máscara para placa (formato brasileiro ABC-1234)
             MaskFormatter maskPlaca = new MaskFormatter("UUU-####");
             maskPlaca.setPlaceholderCharacter('_');
             JFormattedTextField txtPlacaFormatted = new JFormattedTextField(maskPlaca);
@@ -168,7 +163,6 @@ public class TelaApolice extends JFrame {
             txtPlaca = txtPlacaFormatted;
 
         } catch (ParseException e) {
-            // Se não conseguir aplicar máscara, mantém os campos sem máscara
             System.err.println("Erro ao aplicar máscaras: " + e.getMessage());
         }
     }
@@ -179,14 +173,12 @@ public class TelaApolice extends JFrame {
             RetornoInclusaoApolice retorno = mediator.incluirApolice(dados);
 
             if (retorno.getMensagemErro() == null) {
-                // Inclusão bem sucedida
                 JOptionPane.showMessageDialog(this,
                         "Apólice incluída com sucesso! Anote o número da apólice: " + retorno.getNumeroApolice(),
                         "Sucesso",
                         JOptionPane.INFORMATION_MESSAGE);
                 limpar();
             } else {
-                // Inclusão mal sucedida
                 JOptionPane.showMessageDialog(this,
                         retorno.getMensagemErro(),
                         "Erro na Inclusão",
@@ -206,9 +198,7 @@ public class TelaApolice extends JFrame {
         txtPlaca.setText("");
         txtAno.setText("");
         txtValorMaximoSegurado.setText("");
-        cmbCategoria.setSelectedIndex(0); // Primeiro elemento
-
-        // Foca no primeiro campo
+        cmbCategoria.setSelectedIndex(0);
         txtCpfCnpj.requestFocus();
     }
 
@@ -236,14 +226,11 @@ public class TelaApolice extends JFrame {
             throw new IllegalArgumentException("Valor máximo segurado deve ser um número válido");
         }
 
-        // --- ALTERAÇÃO AQUI: Garante que o código enviado é ordinal + 1 ---
         String nomeCategoriaSelecionada = (String) cmbCategoria.getSelectedItem();
-        int codigoCategoria = -1; // Valor padrão para indicar que não foi encontrada
+        int codigoCategoria = -1;
 
         for (CategoriaVeiculo cat : CategoriaVeiculo.values()) {
             if (cat.name().equalsIgnoreCase(nomeCategoriaSelecionada)) {
-                // O ApoliceMediator espera um valor que, ao subtrair 1, resulte no ordinal.
-                // Então, enviamos o ordinal + 1.
                 codigoCategoria = cat.ordinal() + 1;
                 break;
             }
@@ -252,7 +239,6 @@ public class TelaApolice extends JFrame {
         if (codigoCategoria == -1) {
             throw new IllegalArgumentException("Categoria de veículo selecionada é inválida.");
         }
-        // --- FIM DA ALTERAÇÃO ---
 
         return new DadosVeiculo(cpfOuCnpj, placa, ano, valorMaximoSegurado, codigoCategoria);
     }
@@ -260,7 +246,6 @@ public class TelaApolice extends JFrame {
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
             try {
-                // Importante: Manter esta linha aqui para ter o look and feel nativo
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                 TelaApolice frame = new TelaApolice();
                 frame.setVisible(true);
