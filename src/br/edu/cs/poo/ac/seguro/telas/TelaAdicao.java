@@ -45,21 +45,18 @@ public class TelaAdicao {
 		}
 	}
 
-	/**
-	 * Create contents of the window.
-	 */
 	protected void createContents() {
 		shlTelaAdio = new Shell();
 		shlTelaAdio.setSize(556, 330);
-		shlTelaAdio.setText("Tela adi\u00E7\u00E3o");
+		shlTelaAdio.setText("Tela adição");
 		
 		Label lblPrimeiroNmero = new Label(shlTelaAdio, SWT.NONE);
 		lblPrimeiroNmero.setBounds(41, 40, 121, 20);
-		lblPrimeiroNmero.setText("Primeiro n\u00FAmero");
+		lblPrimeiroNmero.setText("Primeiro número");
 		
 		Label lblNewLabel = new Label(shlTelaAdio, SWT.NONE);
 		lblNewLabel.setBounds(41, 102, 121, 20);
-		lblNewLabel.setText("Segundo n\u00FAmero");
+		lblNewLabel.setText("Segundo número");
 		
 		txtPrimeiroNumero = new Text(shlTelaAdio, SWT.BORDER);
 		txtPrimeiroNumero.setBounds(183, 40, 78, 26);

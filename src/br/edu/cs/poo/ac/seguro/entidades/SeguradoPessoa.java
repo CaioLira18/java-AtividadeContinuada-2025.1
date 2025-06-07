@@ -15,10 +15,11 @@ public class SeguradoPessoa extends Segurado implements Serializable {
 		this.renda = renda;
 	}
 
-	public SeguradoPessoa(String cpf, String nome) {
+	public SeguradoPessoa(String cpf, String nome, String endereco, String telefone, BigDecimal bonus) {
 		super(nome, null, LocalDate.now(), BigDecimal.ZERO);
 		this.cpf = cpf;
 		this.renda = 0.0;
+
 	}
 
 	public String getCpf() {

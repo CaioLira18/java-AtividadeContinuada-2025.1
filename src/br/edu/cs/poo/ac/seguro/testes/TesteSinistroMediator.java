@@ -65,10 +65,10 @@ public class TesteSinistroMediator extends TesteMediator {
 			Assertions.assertNotNull(msgs);
 			Assertions.assertEquals(5, msgs.size());
 			Assertions.assertEquals("Data/hora do sinistro deve ser informada", msgs.get(0));			
-			Assertions.assertEquals("Placa do Veículo deve ser informada", msgs.get(1));
-			Assertions.assertEquals("Usuário do registro de sinistro deve ser informado", msgs.get(2));
+			Assertions.assertEquals("Placa do Veiculo deve ser informada", msgs.get(1));
+			Assertions.assertEquals("Usuario do registro de sinistro deve ser informado", msgs.get(2));
 			Assertions.assertEquals("Valor do sinistro deve ser maior que zero", msgs.get(3));
-			Assertions.assertEquals("Código do tipo de sinistro inválido", msgs.get(4));
+			Assertions.assertEquals("Codigo do tipo de sinistro invalido", msgs.get(4));
 		}
 		try {
 			DadosSinistro dados = new DadosSinistro(null, null, null, 0, 6);
@@ -79,10 +79,10 @@ public class TesteSinistroMediator extends TesteMediator {
 			Assertions.assertNotNull(msgs);
 			Assertions.assertEquals(5, msgs.size());
 			Assertions.assertEquals("Data/hora do sinistro deve ser informada", msgs.get(0));			
-			Assertions.assertEquals("Placa do Veículo deve ser informada", msgs.get(1));
-			Assertions.assertEquals("Usuário do registro de sinistro deve ser informado", msgs.get(2));
+			Assertions.assertEquals("Placa do Veiculo deve ser informada", msgs.get(1));
+			Assertions.assertEquals("Usuario do registro de sinistro deve ser informado", msgs.get(2));
 			Assertions.assertEquals("Valor do sinistro deve ser maior que zero", msgs.get(3));
-			Assertions.assertEquals("Código do tipo de sinistro inválido", msgs.get(4));
+			Assertions.assertEquals("Codigo do tipo de sinistro invalido", msgs.get(4));
 		}
 	}
 	@Test
@@ -96,7 +96,7 @@ public class TesteSinistroMediator extends TesteMediator {
 			Assertions.assertNotNull(msgs);
 			Assertions.assertEquals(2, msgs.size());
 			Assertions.assertEquals("Data/hora do sinistro deve ser menor que a data/hora atual", msgs.get(0));			
-			Assertions.assertEquals("Veículo não cadastrado", msgs.get(1));
+			Assertions.assertEquals("Veiculo nao cadastrado", msgs.get(1));
 		}
 	}
 	
@@ -135,7 +135,7 @@ public class TesteSinistroMediator extends TesteMediator {
 			List<String> msgs = e.getMensagens();
 			Assertions.assertNotNull(msgs);
 			Assertions.assertEquals(1, msgs.size());
-			Assertions.assertEquals("Não existe apólice vigente para o veículo", msgs.get(0));			
+			Assertions.assertEquals("Nao existe apolice vigente para o veiculo", msgs.get(0));			
 		}
 	}	
 	@Test
@@ -157,7 +157,7 @@ public class TesteSinistroMediator extends TesteMediator {
 			List<String> msgs = e.getMensagens();
 			Assertions.assertNotNull(msgs);
 			Assertions.assertEquals(1, msgs.size());
-			Assertions.assertEquals("Não existe apólice vigente para o veículo", msgs.get(0));			
+			Assertions.assertEquals("Nao existe apolice vigente para o veiculo", msgs.get(0));			
 		}
 	}	
 	@Test
@@ -182,7 +182,7 @@ public class TesteSinistroMediator extends TesteMediator {
 			List<String> msgs = e.getMensagens();
 			Assertions.assertNotNull(msgs);
 			Assertions.assertEquals(1, msgs.size());
-			Assertions.assertEquals("Não existe apólice vigente para o veículo", msgs.get(0));			
+			Assertions.assertEquals("Nao existe apolice vigente para o veiculo", msgs.get(0));			
 		}
 	}
 	@Test
@@ -210,7 +210,7 @@ public class TesteSinistroMediator extends TesteMediator {
 			List<String> msgs = e.getMensagens();
 			Assertions.assertNotNull(msgs);
 			Assertions.assertEquals(1, msgs.size());
-			Assertions.assertEquals("Valor do sinistro não pode ultrapassar o valor máximo segurado constante na apólice", msgs.get(0));			
+			Assertions.assertEquals("Valor do sinistro nao pode ultrapassar o valor maximo segurado constante na apolice", msgs.get(0));			
 		}
 	}
 	@Test
