@@ -87,8 +87,8 @@ public class ApoliceMediator {
 					"Ano tem que estar entre 2020 e 2025, incluindo estes");
 		}
 
-		if (dados.getCodigoCategoria() < 0 ||
-				dados.getCodigoCategoria() >= CategoriaVeiculo.values().length) {
+		if (dados.getCodigoCategoria() < 1 ||
+				dados.getCodigoCategoria() > CategoriaVeiculo.values().length) {
 			return new RetornoInclusaoApolice(null, "Categoria inválida");
 		}
 
